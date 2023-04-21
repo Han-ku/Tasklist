@@ -30,6 +30,7 @@
             android:id="@+id/ratingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
+            android:isIndicator="true"
             android:layout_marginHorizontal="15dp"/>
 
         <ImageView

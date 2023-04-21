@@ -1,21 +1,26 @@
 package com.example.p1
 
+import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 
 class PersonListViewModel : ViewModel() {
-    fun addPersons(adapter: PersonListAdapter) {
+
+    var personList = MutableLiveData<ArrayList<Person>>()
+
+    fun addPersons() {
         val persons: List<Person> = listOf(
-            Person( "","John", 1),
+            Person("", "John", 1),
             Person("", "Mary", 2),
-            Person("","Peter", 3)
+            Person("", "Peter", 3)
         )
 
-        val currentList: MutableList<Person> = adapter.entries
-        currentList.addAll(persons)
-        adapter.updatePersonList(ArrayList(persons))
+        personList.value = ArrayList(persons)
     }
 
     fun addPerson(photoPath: String, name: String, rating: Int) {
-        Person(photoPath, name, rating)
+        val currentList: ArrayList<Person> = personList.value!!
+        currentList.add(Person(photoPath, name, rating))
+        personList.value = currentList
+
     }
 }

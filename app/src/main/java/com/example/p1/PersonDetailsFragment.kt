@@ -37,7 +37,7 @@ class PersonDetailsFragment : Fragment() {
         binding.apply {
             if (person != null) {
                 name.text = person.name
-                ratingBar.numStars = person.rating
+                ratingBar.rating = person.rating.toFloat()
             }
         }
 

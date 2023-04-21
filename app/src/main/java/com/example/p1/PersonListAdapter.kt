@@ -38,7 +38,7 @@ class PersonListAdapter(context: Context, entries: MutableList<Person>, private 
         val person: Person = entries[position]
         holder.personName.text = person.name
         holder.personPhoto.setImageURI(person.photoPath.toUri())
-        holder.personRating.numStars = person.rating
+        holder.personRating.rating = person.rating.toFloat()
 
         holder.personRowContainer.setOnClickListener {
             clickListener(person)

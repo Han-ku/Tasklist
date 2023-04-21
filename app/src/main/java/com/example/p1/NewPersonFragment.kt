@@ -10,12 +10,15 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.net.toUri
+import androidx.fragment.app.activityViewModels
 import coil.load
 import com.example.p1.databinding.FragmentNewPersonBinding
 
 private const val GALLERY_REQUEST_CODE = 1
 
 class NewPersonFragment : Fragment() {
+
+    private val viewModel: PersonListViewModel by activityViewModels()
 
     companion object {
         fun newInstance(person: Person): NewPersonFragment {
@@ -53,8 +56,8 @@ class NewPersonFragment : Fragment() {
         }
 
         binding.saveButton.setOnClickListener {
-            if(binding.nameEditText.text.toString() != "" && binding.ratingBar.numStars != 0) {
-
+            if(binding.nameEditText.text.toString() != "" && binding.ratingBar.rating.toInt() != 0) {
+                viewModel.addPerson("", binding.nameEditText.text.toString(), binding.ratingBar.rating.toInt() )
                 val transaction = requireActivity().supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.fragmentContainerView, ListFragment())
                 transaction.addToBackStack(null)

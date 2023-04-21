@@ -4,6 +4,7 @@ import android.app.AlertDialog
 import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.activityViewModels
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.p1.databinding.FragmentListBinding
@@ -15,7 +16,7 @@ class ListFragment : Fragment() {
         get()=_binding!!
 
     private lateinit var adapter: PersonListAdapter
-    private lateinit var viewModel: PersonListViewModel
+    private val viewModel: PersonListViewModel by activityViewModels()
 
 
     override fun onCreateView(
@@ -23,12 +24,14 @@ class ListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding =  FragmentListBinding.inflate(inflater, container, false)
-        viewModel = ViewModelProvider(this)[PersonListViewModel::class.java]
+        //viewModel = ViewModelProvider(this)[PersonListViewModel::class.java]
         setHasOptionsMenu(true)
 
-        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
+        if(viewModel.personList.value == null){
+            viewModel.addPersons()
+        }
 
-        //test git commit
+        binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
         adapter = PersonListAdapter(requireContext(), mutableListOf(),
             clickListener = {
@@ -51,9 +54,11 @@ class ListFragment : Fragment() {
                 dialog.show()
         })
 
-        binding.recyclerView.adapter = adapter
+        viewModel.personList.observe(requireActivity()) {
+            adapter.updatePersonList(it)
+        }
 
-        viewModel.addPersons(adapter)
+        binding.recyclerView.adapter = adapter
 
         binding.amountTextView.text = adapter.itemCount.toString()
 
@@ -66,6 +71,8 @@ class ListFragment : Fragment() {
 
         return binding.root
     }
+
+
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.top_menu, menu)
