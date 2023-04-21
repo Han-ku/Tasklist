@@ -34,6 +34,14 @@ class PersonDetailsFragment : Fragment() {
 
         val person = arguments?.getParcelable<Person>("person")
 
+        binding.apply {
+            if (person != null) {
+                name.text = person.name
+                ratingBar.numStars = person.rating
+            }
+        }
+
+
         binding.editButton.setOnClickListener {
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
             transaction.add(R.id.fragmentContainerView, NewPersonFragment.newInstance(person!!))
