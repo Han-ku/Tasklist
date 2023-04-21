@@ -9,9 +9,9 @@ class PersonListViewModel : ViewModel() {
 
     fun addPersons() {
         val persons: List<Person> = listOf(
-            Person("", "John", 1),
-            Person("", "Mary", 2),
-            Person("", "Peter", 3)
+            Person("", "Peter", 1),
+            Person("", "John", 3),
+            Person("", "Mary", 2)
         )
 
         personList.value = ArrayList(persons)
@@ -22,5 +22,9 @@ class PersonListViewModel : ViewModel() {
         currentList.add(Person(photoPath, name, rating))
         personList.value = currentList
 
+    }
+
+    fun deletePerson(person: Person){
+        personList.value!!.remove(person)
     }
 }

@@ -5,13 +5,14 @@ import android.content.Context
 import android.view.WindowManager
 import android.widget.Button
 import android.widget.RadioButton
+import androidx.fragment.app.Fragment
 
 class SortDialog constructor(context: Context) {
 
     private var sortBy = "ratting"
 
     private var context: Context
-    private lateinit var rattingButton: RadioButton
+    private lateinit var ratingButton: RadioButton
     private lateinit var nameButton: RadioButton
     private lateinit var searchButton: Button
 
@@ -19,7 +20,7 @@ class SortDialog constructor(context: Context) {
         this.context = context
     }
 
-    fun showSortDialog() {
+    fun showSortDialog(fragment: ListFragment) {
         val dialog = Dialog(context)
         dialog.setContentView(R.layout.dialog_sort)
         dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
@@ -30,12 +31,12 @@ class SortDialog constructor(context: Context) {
         lWindowParams.height = WindowManager.LayoutParams.WRAP_CONTENT
         dialog.window!!.attributes = lWindowParams
 
-        rattingButton = dialog.findViewById(R.id.radioButton)
+        ratingButton = dialog.findViewById(R.id.radioButton)
         nameButton = dialog.findViewById(R.id.radioButton2)
         searchButton = dialog.findViewById(R.id.searchButton)
 
-        rattingButton.setOnClickListener {
-            sortBy = "ratting"
+        ratingButton.setOnClickListener {
+            sortBy = "rating"
         }
 
         nameButton.setOnClickListener {
@@ -43,6 +44,7 @@ class SortDialog constructor(context: Context) {
         }
 
         searchButton.setOnClickListener {
+            fragment.sortPersonList(sortBy)
             dialog.dismiss()
         }
         dialog.show()

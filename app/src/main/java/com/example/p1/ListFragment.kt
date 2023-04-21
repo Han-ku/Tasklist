@@ -44,7 +44,9 @@ class ListFragment : Fragment() {
 
                 builder.setTitle("Delete person").setMessage("Are you sure?")
                 builder.setPositiveButton("Yes") { dialog, which ->
-                    adapter.deletePerson(it)
+                    //adapter.deletePerson(it)
+                    viewModel.deletePerson(it)
+                    adapter.notifyDataSetChanged()
                 }
                 builder.setNegativeButton("Cancel") { dialog, which ->
                     dialog.dismiss()
@@ -58,9 +60,8 @@ class ListFragment : Fragment() {
             adapter.updatePersonList(it)
         }
 
+        binding.amountTextView.text = viewModel.personList.value!!.size.toString()
         binding.recyclerView.adapter = adapter
-
-        binding.amountTextView.text = adapter.itemCount.toString()
 
         binding.floatingActionButton2.setOnClickListener {
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
@@ -73,6 +74,19 @@ class ListFragment : Fragment() {
     }
 
 
+    fun sortPersonList(sortBy: String){
+        var sortedList = ArrayList<Person>()
+
+        when(sortBy){
+            "rating" -> {
+                ArrayList(viewModel.personList.value!!.sortedBy { it.rating }).let { adapter.updatePersonList(it) }
+            }
+            "name" -> {
+                ArrayList(viewModel.personList.value!!.sortedBy { it.name }).let { adapter.updatePersonList(it) }
+            }
+
+        }
+    }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
         inflater.inflate(R.menu.top_menu, menu)
@@ -82,7 +96,7 @@ class ListFragment : Fragment() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.sortBy -> {
-                SortDialog(requireContext()).showSortDialog()
+                SortDialog(requireContext()).showSortDialog(this)
                 true
             }
             else -> super.onOptionsItemSelected(item)
