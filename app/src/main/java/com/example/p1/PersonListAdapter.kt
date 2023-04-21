@@ -29,7 +29,7 @@ class PersonListAdapter(context: Context, entries: MutableList<Person>, private 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ListViewHolder {
         val layoutInflater = LayoutInflater.from(parent.context)
-        val view: View = layoutInflater.inflate(R.layout.single_card, parent, false)
+        val view: View = layoutInflater.inflate(R.layout.simple_card, parent, false)
 
         return ListViewHolder(view)
     }
@@ -38,7 +38,7 @@ class PersonListAdapter(context: Context, entries: MutableList<Person>, private 
         val person: Person = entries[position]
         holder.personName.text = person.name
         holder.personPhoto.setImageURI(person.photoPath.toUri())
-        holder.personRating.numStars = person.ratting
+        holder.personRating.numStars = person.rating
 
         holder.personRowContainer.setOnClickListener {
             clickListener(person)
