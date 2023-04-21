@@ -28,6 +28,8 @@ class ListFragment : Fragment() {
 
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
+        //test git commit
+
         adapter = PersonListAdapter(requireContext(), mutableListOf(),
             clickListener = {
                 val transaction = requireActivity().supportFragmentManager.beginTransaction()
