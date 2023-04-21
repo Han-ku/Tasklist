@@ -33,7 +33,7 @@ class ListFragment : Fragment() {
         adapter = PersonListAdapter(requireContext(), mutableListOf(),
             clickListener = {
                 val transaction = requireActivity().supportFragmentManager.beginTransaction()
-                transaction.add(R.id.fragmentContainerView, PersonDetailsFragment.newInstance(it))
+                transaction.replace(R.id.fragmentContainerView, PersonDetailsFragment.newInstance(it))
                 transaction.addToBackStack(null)
                 transaction.commit() },
             longClickListener = {
