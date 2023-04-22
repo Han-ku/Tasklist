@@ -3,10 +3,57 @@
 
     <style name="error">
         <item name="android:fontFamily">@font/raleway_semibold</item>
-        <item name="android:textColor">@color/red</item>
+        <item name="android:textColor">@color/chestnut</item>
         <item name="android:fontStyle">normal</item>
         <item name="android:fontWeight">500</item>
         <item name="android:textSize">14sp</item>
         <item name="lineHeight">18sp</item>
     </style>
+
+    <style name="title">
+        <item name="android:fontFamily">@font/nunito_bold</item>
+        <item name="android:textColor">@color/chestnut</item>
+        <item name="android:fontWeight">800</item>
+        <item name="android:textSize">20sp</item>
+        <item name="lineHeight">24sp</item>
+    </style>
+
+    <style name="title_second">
+        <item name="android:fontFamily">@font/nunito_bold</item>
+        <item name="android:textColor">@color/tangerine</item>
+        <item name="android:fontWeight">600</item>
+        <item name="android:textSize">16sp</item>
+        <item name="lineHeight">20sp</item>
+    </style>
+
+    <style name="text">
+        <item name="android:fontFamily">@font/raleway</item>
+        <item name="android:textColor">@color/chestnut</item>
+        <item name="android:fontStyle">normal</item>
+        <item name="android:fontWeight">500</item>
+        <item name="android:textSize">14sp</item>
+        <item name="lineHeight">18sp</item>
+    </style>
+
+    <style name="text_white">
+        <item name="android:fontFamily">@font/raleway</item>
+        <item name="android:textColor">@color/light_yellow</item>
+        <item name="android:fontWeight">800</item>
+        <item name="android:textSize">18sp</item>
+        <item name="lineHeight">18sp</item>
+    </style>
+
+    <style name="text_edit">
+        <item name="android:fontFamily">@font/raleway_bold</item>
+        <item name="android:textColor">@color/tangerine</item>
+        <item name="android:fontStyle">normal</item>
+        <item name="android:fontWeight">500</item>
+        <item name="android:textSize">14sp</item>
+        <item name="lineHeight">18sp</item>
+    </style>
+
+    <style name="editTextStyle" parent="Widget.AppCompat.EditText">
+        <item name="android:textColorHint">@color/gray</item>
+    </style>
+
 </resources>

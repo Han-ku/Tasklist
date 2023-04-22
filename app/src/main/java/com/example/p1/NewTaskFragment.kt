@@ -16,7 +16,6 @@ import com.example.p1.databinding.FragmentNewTaskBinding
 import com.google.android.material.datepicker.MaterialDatePicker
 import kotlinx.datetime.*
 
-
 private const val GALLERY_REQUEST_CODE = 1
 
 class NewTaskFragment : Fragment() {

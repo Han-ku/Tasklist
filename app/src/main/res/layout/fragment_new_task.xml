@@ -17,6 +17,14 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toTopOf="parent">
 
+        <TextView
+            android:id="@+id/title"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:text="Create new task"
+            android:textAppearance="@style/title"
+            android:layout_gravity="center"
+            android:layout_marginBottom="25dp" />
 
         <ImageView
             android:id="@+id/takePhoto"
@@ -24,7 +32,8 @@
             android:layout_height="68dp"
             android:layout_gravity="center"
             android:layout_marginBottom="30dp"
-            android:src="@drawable/outline_add_a_photo_24" />
+            android:src="@drawable/outline_add_a_photo_24"
+            app:tint="@color/tea_green"/>
 
         <ImageView
             android:id="@+id/photo"
@@ -88,6 +97,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginEnd="70dp"
+                    android:textAppearance="@style/text"
                     android:text="Name" />
 
                 <EditText
@@ -95,6 +105,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:ems="11"
+                    android:theme="@style/editTextStyle"
                     android:hint="Input name"
                     android:inputType="textPersonName"
                     tools:ignore="TouchTargetSizeCheck" />
@@ -131,6 +142,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginEnd="35dp"
+                    android:textAppearance="@style/text"
                     android:text="Description" />
 
                 <EditText
@@ -139,6 +151,7 @@
                     android:layout_height="wrap_content"
                     android:ems="11"
                     android:hint="Input description"
+                    android:theme="@style/editTextStyle"
                     android:inputType="textPersonName"
                     tools:ignore="TouchTargetSizeCheck" />
 
@@ -172,6 +185,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginEnd="60dp"
+                    android:textAppearance="@style/text"
                     android:text="Rating" />
 
                 <RatingBar
@@ -211,6 +225,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
                     android:layout_marginEnd="50dp"
+                    android:textAppearance="@style/text"
                     android:text="Deadline" />
 
                 <LinearLayout
@@ -218,7 +233,6 @@
                     android:layout_width="235dp"
                     android:layout_height="56dp"
                     android:layout_marginEnd="20dp"
-                    android:layout_marginBottom="15dp"
                     android:background="@android:drawable/editbox_background"
                     android:gravity="center"
                     android:orientation="horizontal">
@@ -231,6 +245,7 @@
                         android:gravity="center_vertical"
                         android:padding="10dp"
                         android:text= "--.--.----"
+                        android:textColor="@color/gray"
                         android:textSize="15sp" />
 
                     <ImageView
@@ -238,7 +253,8 @@
                         android:layout_width="30dp"
                         android:layout_height="30dp"
                         android:layout_gravity="center"
-                        android:src="@drawable/ic_calendar" />
+                        android:src="@drawable/ic_calendar"
+                        app:tint="@color/tea_green"/>
 
                 </LinearLayout>
 
@@ -247,14 +263,25 @@
 
     </LinearLayout>
 
-    <Button
+    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/saveButton"
+        style="@style/Widget.Material3.FloatingActionButton.Primary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Save"
+        android:layout_marginBottom="40dp"
+        android:contentDescription="fabTaskList"
+        android:text="@string/save"
+        android:backgroundTint="@color/chestnut"
+        android:textColor="@color/light_yellow"
+        app:icon="@drawable/outline_save_24"
+        app:iconGravity="end"
+        android:gravity="center"
+        android:textAppearance="@style/text_white"
+        app:iconTint="@color/light_yellow"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        android:layout_marginBottom="40dp"/>
+        app:shapeAppearance="@style/ShapeAppearanceOverlay.Material3.FloatingActionButton"
+        tools:ignore="HardcodedText,ImageContrastCheck" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

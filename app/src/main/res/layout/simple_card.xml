@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="15dp"
     app:cardCornerRadius="10dp"
+    android:backgroundTint="@color/light_yellow"
     android:id="@+id/taskRowContainer">
 
     <androidx.constraintlayout.widget.ConstraintLayout
@@ -17,8 +18,9 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="7dp"
+            android:layout_marginStart="10dp"
+            android:layout_marginVertical="10dp"
             app:layout_constraintBottom_toBottomOf="parent"
-            app:layout_constraintEnd_toStartOf="@+id/ratingBar"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/avatars" />
@@ -29,6 +31,7 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="TextView"
+            android:textAppearance="@style/title"
             android:layout_marginTop="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView"
@@ -40,16 +43,18 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="TextView"
+            android:textAppearance="@style/title_second"
             app:layout_constraintEnd_toEndOf="@+id/name"
             app:layout_constraintStart_toStartOf="@+id/name"
             app:layout_constraintTop_toTopOf="@+id/name"
-            android:layout_marginTop="25dp"/>
+            android:layout_marginTop="35dp"/>
 
         <RatingBar
             android:id="@+id/ratingBar"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center"
+            android:layout_marginHorizontal="10dp"
             android:layout_marginTop="10dp"
             android:isIndicator="true"
             app:layout_constraintEnd_toEndOf="@+id/deadline"

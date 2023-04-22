@@ -37,8 +37,10 @@ class TaskListAdapter(context: Context, entries: MutableList<Task>, private val 
     override fun onBindViewHolder(holder: ListViewHolder, position: Int) {
         val task: Task = entries[position]
         holder.taskName.text = task.name
-//        holder.taskDescription.text = task.description
-        holder.taskPhoto.setImageURI(task.photoPath.toUri())
+        if(task.photoPath != "") {
+            holder.taskPhoto.setImageURI(task.photoPath.toUri())
+            holder.taskPhoto.visibility = View.VISIBLE
+        } else holder.taskPhoto.visibility = View.GONE
         holder.taskRating.rating = task.rating.toFloat()
         holder.taskDeadline.text = task.deadline
 
@@ -56,7 +58,6 @@ class TaskListAdapter(context: Context, entries: MutableList<Task>, private val 
 
     inner class ListViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         var taskName: TextView
-//        var taskDescription: TextView
         var taskRating: RatingBar
         var taskPhoto: ImageView
         var taskDeadline: TextView
@@ -64,16 +65,10 @@ class TaskListAdapter(context: Context, entries: MutableList<Task>, private val 
 
         init {
             taskName = itemView.findViewById(R.id.name)
-//            taskDescription = itemView.findViewById(R.id.description)
             taskRating = itemView.findViewById(R.id.ratingBar)
             taskPhoto = itemView.findViewById(R.id.imageView)
             taskDeadline = itemView.findViewById(R.id.deadline)
             taskRowContainer = itemView.findViewById(R.id.taskRowContainer)
         }
     }
-
-//    fun deleteTask(task: Task){
-//        entries.remove(task)
-//        notifyDataSetChanged()
-//    }
 }

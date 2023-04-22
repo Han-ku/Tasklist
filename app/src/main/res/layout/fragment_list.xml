@@ -6,17 +6,20 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     tools:context=".ListFragment">
 
-
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/floatingActionButton2"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        style="@style/Widget.Material3.FloatingActionButton.Primary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
         android:layout_margin="16dp"
-        android:clickable="true"
-        android:src="@android:drawable/ic_input_add"
-        tools:ignore="SpeakableTextPresentCheck" />
+        android:backgroundTint="@color/chestnut"
+        android:contentDescription="fabTaskList"
+        app:shapeAppearance="@style/ShapeAppearanceOverlay.Material3.FloatingActionButton"
+        app:srcCompat="@drawable/baseline_add_24"
+        app:tint="@color/light_yellow"
+        tools:ignore="HardcodedText,ImageContrastCheck" />
 
     <ScrollView
         android:layout_width="match_parent"
@@ -37,6 +40,7 @@
 
                 <TextView
                     android:id="@+id/textView"
+                    android:textAppearance="@style/title_second"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:layout_marginEnd="15dp"
@@ -46,6 +50,7 @@
                     android:id="@+id/amountTextView"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:textAppearance="@style/title"
                     android:layout_weight="1"
                     android:text="0" />
             </LinearLayout>

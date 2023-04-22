@@ -5,6 +5,7 @@ import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.net.toUri
 import com.example.p1.databinding.FragmentTaskDetailsBinding
 
 class TaskDetailsFragment : Fragment() {
@@ -34,8 +35,13 @@ class TaskDetailsFragment : Fragment() {
 
         val task = arguments?.getParcelable<Task>("task")
 
+
         binding.apply {
             if (task != null) {
+                checkPhoto(task.photoPath)
+                if(task.photoPath != "") {
+                    photo.setImageURI(task.photoPath.toUri())
+                }
                 name.text = task.name
                 description.text = task.description
                 ratingBar.rating = task.rating.toFloat()
@@ -51,5 +57,10 @@ class TaskDetailsFragment : Fragment() {
         }
 
         return binding.root
+    }
+
+    fun checkPhoto(photoPath: String) {
+        if(photoPath == "") binding.photo.visibility = View.GONE
+        else binding.photo.visibility = View.VISIBLE
     }
 }

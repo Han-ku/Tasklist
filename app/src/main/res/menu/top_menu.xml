@@ -5,6 +5,7 @@
         android:id="@+id/sortBy"
         android:title="@string/sort_by"
         android:icon="@drawable/baseline_sort_24"
+        android:iconTint="@color/vanilla"
         app:showAsAction="always"
         />
 </menu>
