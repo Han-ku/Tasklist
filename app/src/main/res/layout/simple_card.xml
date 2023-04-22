@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="15dp"
     app:cardCornerRadius="10dp"
-    android:id="@+id/personRowContainer">
+    android:id="@+id/taskRowContainer">
 
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
@@ -29,10 +29,21 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center"
             android:text="TextView"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="15dp"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toEndOf="@+id/imageView"
             app:layout_constraintTop_toTopOf="parent" />
+
+        <TextView
+            android:id="@+id/deadline"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center"
+            android:text="TextView"
+            app:layout_constraintEnd_toEndOf="@+id/name"
+            app:layout_constraintStart_toStartOf="@+id/name"
+            app:layout_constraintTop_toTopOf="@+id/name"
+            android:layout_marginTop="25dp"/>
 
         <RatingBar
             android:id="@+id/ratingBar"
@@ -41,9 +52,9 @@
             android:layout_gravity="center"
             android:layout_marginTop="10dp"
             android:isIndicator="true"
-            app:layout_constraintEnd_toEndOf="@+id/name"
-            app:layout_constraintStart_toStartOf="@+id/name"
-            app:layout_constraintTop_toBottomOf="@+id/name" />
+            app:layout_constraintEnd_toEndOf="@+id/deadline"
+            app:layout_constraintStart_toStartOf="@+id/deadline"
+            app:layout_constraintTop_toBottomOf="@+id/deadline" />
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

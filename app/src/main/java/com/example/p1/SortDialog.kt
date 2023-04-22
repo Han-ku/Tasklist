@@ -44,7 +44,7 @@ class SortDialog constructor(context: Context) {
         }
 
         searchButton.setOnClickListener {
-            fragment.sortPersonList(sortBy)
+            fragment.sortTaskList(sortBy)
             dialog.dismiss()
         }
         dialog.show()

@@ -2,35 +2,33 @@ package com.example.p1
 
 import android.app.Activity
 import android.content.Intent
-import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.core.net.toUri
 import androidx.fragment.app.activityViewModels
 import coil.load
-import com.example.p1.databinding.FragmentNewPersonBinding
+import com.example.p1.databinding.FragmentNewTaskBinding
 
 private const val GALLERY_REQUEST_CODE = 1
 
-class NewPersonFragment : Fragment() {
+class NewTaskFragment : Fragment() {
 
-    private val viewModel: PersonListViewModel by activityViewModels()
-
+    private val viewModel: TaskListViewModel by activityViewModels()
+    
     companion object {
-        fun newInstance(person: Person): NewPersonFragment {
-            val fragment = NewPersonFragment()
+        fun newInstance(task: Task): NewTaskFragment {
+            val fragment = NewTaskFragment()
             val args = Bundle()
-            args.putParcelable("person", person)
+            args.putParcelable("task", task)
             fragment.arguments = args
             return fragment
         }
     }
 
-    private var _binding: FragmentNewPersonBinding? = null
+    private var _binding: FragmentNewTaskBinding? = null
     private val binding
         get()=_binding!!
 
@@ -39,10 +37,11 @@ class NewPersonFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        _binding = FragmentNewPersonBinding.inflate(inflater, container, false)
+        // Inflate the layout for this fragment
+        _binding =  FragmentNewTaskBinding.inflate(inflater, container, false)
 
-        val person = arguments?.getParcelable<Person>("person")
-        
+        val task = arguments?.getParcelable<Task>("task")
+
         binding.takePhoto.setOnClickListener {
             openGallery()
         }
@@ -56,8 +55,13 @@ class NewPersonFragment : Fragment() {
         }
 
         binding.saveButton.setOnClickListener {
-            if(binding.nameEditText.text.toString() != "" && binding.ratingBar.rating.toInt() != 0) {
-                viewModel.addPerson("", binding.nameEditText.text.toString(), binding.ratingBar.rating.toInt() )
+            if(binding.nameEditText.text.toString() != "" && binding.descriptionEditText.text.toString() != "" && binding.deadlineEditText.text.toString() != "") {
+
+                val standartRating: Int
+                if(binding.ratingBar.rating.toInt() == 0) standartRating = 1
+                else standartRating = binding.ratingBar.rating.toInt()
+
+                viewModel.addTask("", binding.nameEditText.text.toString(), binding.descriptionEditText.text.toString(), standartRating, binding.deadlineEditText.text.toString())
                 val transaction = requireActivity().supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.fragmentContainerView, ListFragment())
                 transaction.addToBackStack(null)
@@ -74,8 +78,11 @@ class NewPersonFragment : Fragment() {
         if(binding.nameEditText.text.toString() == "") binding.nameError.visibility = View.VISIBLE
         else binding.nameError.visibility = View.GONE
 
-        if(binding.ratingBar.numStars != 0) binding.ratingError.visibility = View.VISIBLE
-        else binding.ratingError.visibility = View.GONE
+        if(binding.descriptionEditText.text.toString() == "") binding.descriptionError.visibility = View.VISIBLE
+        else binding.descriptionError.visibility = View.GONE
+
+        if(binding.deadlineEditText.text.toString() == "") binding.deadlineError.visibility = View.VISIBLE
+        else binding.deadlineError.visibility = View.GONE
     }
 
     private fun openGallery() {
@@ -83,7 +90,6 @@ class NewPersonFragment : Fragment() {
         intent.type = "image/*"
         startActivityForResult(intent, GALLERY_REQUEST_CODE)
     }
-
 
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if ( resultCode == Activity.RESULT_OK) {

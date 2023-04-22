@@ -5,7 +5,6 @@ import android.os.Bundle
 import android.view.*
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
-import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.p1.databinding.FragmentListBinding
 
@@ -15,8 +14,8 @@ class ListFragment : Fragment() {
     private val binding
         get()=_binding!!
 
-    private lateinit var adapter: PersonListAdapter
-    private val viewModel: PersonListViewModel by activityViewModels()
+    private lateinit var adapter: TaskListAdapter
+    private val viewModel: TaskListViewModel by activityViewModels()
 
 
     override fun onCreateView(
@@ -24,28 +23,28 @@ class ListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding =  FragmentListBinding.inflate(inflater, container, false)
-        //viewModel = ViewModelProvider(this)[PersonListViewModel::class.java]
+        //viewModel = ViewModelProvider(this)[TaskListViewModel::class.java]
         setHasOptionsMenu(true)
 
-        if(viewModel.personList.value == null){
-            viewModel.addPersons()
+        if(viewModel.taskList.value == null){
+            viewModel.addTasks()
         }
 
         binding.recyclerView.layoutManager = LinearLayoutManager(requireContext())
 
-        adapter = PersonListAdapter(requireContext(), mutableListOf(),
+        adapter = TaskListAdapter(requireContext(), mutableListOf(),
             clickListener = {
                 val transaction = requireActivity().supportFragmentManager.beginTransaction()
-                transaction.replace(R.id.fragmentContainerView, PersonDetailsFragment.newInstance(it))
+                transaction.replace(R.id.fragmentContainerView, TaskDetailsFragment.newInstance(it))
                 transaction.addToBackStack(null)
                 transaction.commit() },
             longClickListener = {
                 val builder = AlertDialog.Builder(requireContext())
 
-                builder.setTitle("Delete person").setMessage("Are you sure?")
+                builder.setTitle("Delete task").setMessage("Are you sure?")
                 builder.setPositiveButton("Yes") { dialog, which ->
-                    //adapter.deletePerson(it)
-                    viewModel.deletePerson(it)
+                    //adapter.deleteTask(it)
+                    viewModel.deleteTask(it)
                     adapter.notifyDataSetChanged()
                 }
                 builder.setNegativeButton("Cancel") { dialog, which ->
@@ -56,16 +55,16 @@ class ListFragment : Fragment() {
                 dialog.show()
         })
 
-        viewModel.personList.observe(requireActivity()) {
-            adapter.updatePersonList(it)
+        viewModel.taskList.observe(requireActivity()) {
+            adapter.updateTaskList(it)
         }
 
-        binding.amountTextView.text = viewModel.personList.value!!.size.toString()
+        binding.amountTextView.text = viewModel.taskList.value!!.size.toString()
         binding.recyclerView.adapter = adapter
 
         binding.floatingActionButton2.setOnClickListener {
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.replace(R.id.fragmentContainerView, NewPersonFragment())
+            transaction.replace(R.id.fragmentContainerView, NewTaskFragment())
             transaction.addToBackStack(null)
             transaction.commit()
         }
@@ -74,15 +73,15 @@ class ListFragment : Fragment() {
     }
 
 
-    fun sortPersonList(sortBy: String){
-        var sortedList = ArrayList<Person>()
+    fun sortTaskList(sortBy: String){
+        var sortedList = ArrayList<Task>()
 
         when(sortBy){
             "rating" -> {
-                ArrayList(viewModel.personList.value!!.sortedBy { it.rating }).let { adapter.updatePersonList(it) }
+                ArrayList(viewModel.taskList.value!!.sortedBy { it.rating }).let { adapter.updateTaskList(it) }
             }
             "name" -> {
-                ArrayList(viewModel.personList.value!!.sortedBy { it.name }).let { adapter.updatePersonList(it) }
+                ArrayList(viewModel.taskList.value!!.sortedBy { it.name }).let { adapter.updateTaskList(it) }
             }
 
         }
