@@ -9,11 +9,12 @@ import androidx.fragment.app.Fragment
 
 class SortDialog constructor(context: Context) {
 
-    private var sortBy = "ratting"
+    private var sortBy = "latest"
 
     private var context: Context
     private lateinit var ratingButton: RadioButton
     private lateinit var nameButton: RadioButton
+    private lateinit var latestButton: RadioButton
     private lateinit var searchButton: Button
 
     init {
@@ -33,6 +34,7 @@ class SortDialog constructor(context: Context) {
 
         ratingButton = dialog.findViewById(R.id.radioButton)
         nameButton = dialog.findViewById(R.id.radioButton2)
+        latestButton = dialog.findViewById(R.id.radioButton3)
         searchButton = dialog.findViewById(R.id.searchButton)
 
         ratingButton.setOnClickListener {
@@ -41,6 +43,10 @@ class SortDialog constructor(context: Context) {
 
         nameButton.setOnClickListener {
             sortBy = "name"
+        }
+
+        latestButton.setOnClickListener {
+            sortBy = "latest"
         }
 
         searchButton.setOnClickListener {

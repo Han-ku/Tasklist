@@ -3,14 +3,15 @@ package com.example.p1
 import android.os.Parcel
 import android.os.Parcelable
 import java.io.Serializable
-import java.time.LocalDate
+import kotlinx.datetime.*
 
 
 data class Task (val photoPath: String,
                  val name: String,
                  val description: String,
                  val rating: Int,
-                 val deadline: String)  : Serializable, Parcelable {
+                 val deadline: String,
+                 val dateAdded: Instant = Clock.System.now())  : Serializable, Parcelable {
 
     constructor(parcel: Parcel) : this(
         parcel.readString()!!,

@@ -23,6 +23,9 @@ class NewTaskFragment : Fragment() {
 
     private val viewModel: TaskListViewModel by activityViewModels()
 
+    val currentInstant = Clock.System.now()
+    val currentTimeMillis = currentInstant.toEpochMilliseconds()
+
     companion object {
         fun newInstance(task: Task): NewTaskFragment {
             val fragment = NewTaskFragment()
@@ -46,6 +49,8 @@ class NewTaskFragment : Fragment() {
 
         val task = arguments?.getParcelable<Task>("task")
 
+        binding.deadlineTV.text = getFormattedDate(currentTimeMillis)
+
         binding.deadlineLayoutTV.setOnClickListener {
             showDatePickerDialog()
         }
@@ -63,7 +68,7 @@ class NewTaskFragment : Fragment() {
         }
 
         binding.saveButton.setOnClickListener {
-            if(binding.nameEditText.text.toString() != "" && binding.descriptionEditText.text.toString() != "" && binding.deadlineTV.text.toString() != "") {
+            if(binding.nameEditText.text.toString() != "" && binding.descriptionEditText.text.toString() != "") {
 
                 val standartRating: Int
                 if(binding.ratingBar.rating.toInt() == 0) standartRating = 1
@@ -88,9 +93,6 @@ class NewTaskFragment : Fragment() {
 
         if(binding.descriptionEditText.text.toString() == "") binding.descriptionError.visibility = View.VISIBLE
         else binding.descriptionError.visibility = View.GONE
-
-        if(binding.deadlineTV.text.toString() == "") binding.deadlineError.visibility = View.VISIBLE
-        else binding.deadlineError.visibility = View.GONE
     }
 
     private fun openGallery() {
@@ -131,7 +133,6 @@ class NewTaskFragment : Fragment() {
     }
 
     private fun showDatePickerDialog() {
-
         val picker =
             MaterialDatePicker.Builder.datePicker()
                 .setTitleText("Select date")
@@ -141,7 +142,13 @@ class NewTaskFragment : Fragment() {
         picker.show(requireFragmentManager(), "tag")
 
         picker.addOnPositiveButtonClickListener {
+            if(it < currentTimeMillis) {
+                Toast.makeText(requireContext(), "Selected date is before current date", Toast.LENGTH_SHORT).show()
+                return@addOnPositiveButtonClickListener
+            }
+
             binding.deadlineTV.text = "${getFormattedDate(it)}"
+
             picker.dismiss()
         }
 
@@ -160,3 +167,4 @@ class NewTaskFragment : Fragment() {
         return formattedDate
     }
 }
+

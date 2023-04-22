@@ -56,8 +56,7 @@ class ListFragment : Fragment() {
         })
 
         viewModel.taskList.observe(requireActivity()) {
-//            TODO check date
-            ArrayList(viewModel.taskList.value!!.sortedBy { it.deadline }).let { adapter.updateTaskList(it)}
+            sortTaskList("latest")
         }
 
         binding.amountTextView.text = viewModel.taskList.value!!.size.toString()
@@ -75,16 +74,16 @@ class ListFragment : Fragment() {
 
 
     fun sortTaskList(sortBy: String){
-        var sortedList = ArrayList<Task>()
-
         when(sortBy){
             "rating" -> {
                 ArrayList(viewModel.taskList.value!!.sortedBy { it.rating }).let { adapter.updateTaskList(it) }
             }
             "name" -> {
-                ArrayList(viewModel.taskList.value!!.sortedBy { it.name }).let { adapter.updateTaskList(it) }
+                ArrayList(viewModel.taskList.value!!.sortedBy { it.name.uppercase() }).let { adapter.updateTaskList(it) }
             }
-
+            "latest" -> {
+                ArrayList(viewModel.taskList.value!!.sortedByDescending { it.dateAdded }).let { adapter.updateTaskList(it) }
+            }
         }
     }
 
