@@ -2,6 +2,9 @@ package com.example.p1
 
 import android.app.Activity
 import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -9,7 +12,6 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.fragment.app.activityViewModels
-import coil.load
 import com.example.p1.databinding.FragmentNewTaskBinding
 import com.google.android.material.datepicker.MaterialDatePicker
 import kotlinx.datetime.*
@@ -101,9 +103,14 @@ class NewTaskFragment : Fragment() {
         if ( resultCode == Activity.RESULT_OK) {
             when(requestCode) {
                 GALLERY_REQUEST_CODE -> {
-                    getPhoto()
+                    getPhotoVisibility()
+                    val photoUri = data?.data
 //                    TODO find how save photopath
-                    binding.photo.load(data?.data)
+//                    TODO photo rotation
+                    if(photoUri != null) {
+                        binding.photo.setImageBitmap(getBitmapFromUri(photoUri))
+                    }
+                    else Toast.makeText(requireContext(), "Failed to get image", Toast.LENGTH_SHORT).show()
                 }
             }
         } else {
@@ -111,11 +118,16 @@ class NewTaskFragment : Fragment() {
         }
     }
 
-    fun getPhoto() {
+    fun getPhotoVisibility() {
         binding.photo.visibility = View.VISIBLE
-        binding.photo.rotation = 0f
         binding.takePhoto.visibility = View.GONE
         binding.retakePhotoLayout.visibility = View.VISIBLE
+    }
+
+    private fun getBitmapFromUri(uri: Uri): Bitmap? {
+        return requireContext().contentResolver.openInputStream(uri)?.use { inputStream ->
+            BitmapFactory.decodeStream(inputStream)
+        }
     }
 
     private fun showDatePickerDialog() {

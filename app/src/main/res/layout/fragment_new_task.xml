@@ -32,6 +32,7 @@
             android:layout_height="140dp"
             android:layout_gravity="center"
             android:layout_marginBottom="30dp"
+            android:rotation="0"
             android:visibility="gone" />
 
         <LinearLayout
