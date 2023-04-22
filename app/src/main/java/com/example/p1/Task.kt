@@ -3,6 +3,7 @@ package com.example.p1
 import android.os.Parcel
 import android.os.Parcelable
 import java.io.Serializable
+import java.time.LocalDate
 
 
 data class Task (val photoPath: String,

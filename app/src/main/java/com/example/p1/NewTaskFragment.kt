@@ -11,13 +11,16 @@ import android.widget.Toast
 import androidx.fragment.app.activityViewModels
 import coil.load
 import com.example.p1.databinding.FragmentNewTaskBinding
+import com.google.android.material.datepicker.MaterialDatePicker
+import kotlinx.datetime.*
+
 
 private const val GALLERY_REQUEST_CODE = 1
 
 class NewTaskFragment : Fragment() {
 
     private val viewModel: TaskListViewModel by activityViewModels()
-    
+
     companion object {
         fun newInstance(task: Task): NewTaskFragment {
             val fragment = NewTaskFragment()
@@ -37,10 +40,13 @@ class NewTaskFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         _binding =  FragmentNewTaskBinding.inflate(inflater, container, false)
 
         val task = arguments?.getParcelable<Task>("task")
+
+        binding.deadlineLayoutTV.setOnClickListener {
+            showDatePickerDialog()
+        }
 
         binding.takePhoto.setOnClickListener {
             openGallery()
@@ -55,13 +61,13 @@ class NewTaskFragment : Fragment() {
         }
 
         binding.saveButton.setOnClickListener {
-            if(binding.nameEditText.text.toString() != "" && binding.descriptionEditText.text.toString() != "" && binding.deadlineEditText.text.toString() != "") {
+            if(binding.nameEditText.text.toString() != "" && binding.descriptionEditText.text.toString() != "" && binding.deadlineTV.text.toString() != "") {
 
                 val standartRating: Int
                 if(binding.ratingBar.rating.toInt() == 0) standartRating = 1
                 else standartRating = binding.ratingBar.rating.toInt()
 
-                viewModel.addTask("", binding.nameEditText.text.toString(), binding.descriptionEditText.text.toString(), standartRating, binding.deadlineEditText.text.toString())
+                viewModel.addTask("", binding.nameEditText.text.toString(), binding.descriptionEditText.text.toString(), standartRating, binding.deadlineTV.text.toString())
                 val transaction = requireActivity().supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.fragmentContainerView, ListFragment())
                 transaction.addToBackStack(null)
@@ -81,7 +87,7 @@ class NewTaskFragment : Fragment() {
         if(binding.descriptionEditText.text.toString() == "") binding.descriptionError.visibility = View.VISIBLE
         else binding.descriptionError.visibility = View.GONE
 
-        if(binding.deadlineEditText.text.toString() == "") binding.deadlineError.visibility = View.VISIBLE
+        if(binding.deadlineTV.text.toString() == "") binding.deadlineError.visibility = View.VISIBLE
         else binding.deadlineError.visibility = View.GONE
     }
 
@@ -110,5 +116,35 @@ class NewTaskFragment : Fragment() {
         binding.photo.rotation = 0f
         binding.takePhoto.visibility = View.GONE
         binding.retakePhotoLayout.visibility = View.VISIBLE
+    }
+
+    private fun showDatePickerDialog() {
+
+        val picker =
+            MaterialDatePicker.Builder.datePicker()
+                .setTitleText("Select date")
+                .setSelection(MaterialDatePicker.todayInUtcMilliseconds())
+                .build()
+
+        picker.show(requireFragmentManager(), "tag")
+
+        picker.addOnPositiveButtonClickListener {
+            binding.deadlineTV.text = "${getFormattedDate(it)}"
+            picker.dismiss()
+        }
+
+        picker.addOnCancelListener {
+            picker.dismiss()
+        }
+    }
+
+    private fun getFormattedDate(timestamp: Long) : String {
+        val localDateTime = Instant.fromEpochMilliseconds(timestamp).toLocalDateTime(TimeZone.currentSystemDefault())
+        val year = localDateTime.year.toString()
+        val month = localDateTime.month.number.toString().padStart(2, '0')
+        val day = localDateTime.dayOfMonth.toString().padStart(2, '0')
+        val formattedDate = "$day-$month-$year"
+
+        return formattedDate
     }
 }

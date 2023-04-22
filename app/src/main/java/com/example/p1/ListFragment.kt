@@ -56,7 +56,8 @@ class ListFragment : Fragment() {
         })
 
         viewModel.taskList.observe(requireActivity()) {
-            adapter.updateTaskList(it)
+//            TODO check date
+            ArrayList(viewModel.taskList.value!!.sortedBy { it.deadline }).let { adapter.updateTaskList(it)}
         }
 
         binding.amountTextView.text = viewModel.taskList.value!!.size.toString()

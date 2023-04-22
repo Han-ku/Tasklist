@@ -52,4 +52,5 @@ dependencies {
     implementation('androidx.fragment:fragment:1.5.6')
     implementation 'io.coil-kt:coil:1.1.1'
 
+    implementation 'org.jetbrains.kotlinx:kotlinx-datetime:0.3.3'
 }

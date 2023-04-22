@@ -212,14 +212,34 @@
                     android:layout_marginEnd="50dp"
                     android:text="Deadline" />
 
-                <EditText
-                    android:id="@+id/deadlineEditText"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:ems="11"
-                    android:hint="Input deadline"
-                    android:inputType="textPersonName"
-                    tools:ignore="TouchTargetSizeCheck" />
+                <LinearLayout
+                    android:id="@+id/deadlineLayoutTV"
+                    android:layout_width="235dp"
+                    android:layout_height="56dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_marginBottom="15dp"
+                    android:background="@android:drawable/editbox_background"
+                    android:gravity="center"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:id="@+id/deadlineTV"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="1"
+                        android:gravity="center_vertical"
+                        android:padding="10dp"
+                        android:text= "--.--.----"
+                        android:textSize="15sp" />
+
+                    <ImageView
+                        android:id="@+id/deadlineImageTV"
+                        android:layout_width="30dp"
+                        android:layout_height="30dp"
+                        android:layout_gravity="center"
+                        android:src="@drawable/ic_calendar" />
+
+                </LinearLayout>
 
             </LinearLayout>
         </LinearLayout>
