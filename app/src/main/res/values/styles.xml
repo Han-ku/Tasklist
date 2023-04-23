@@ -54,6 +54,7 @@
 
     <style name="editTextStyle" parent="Widget.AppCompat.EditText">
         <item name="android:textColorHint">@color/gray</item>
+        <item name="android:textColor">@color/chestnut</item>
     </style>
 
 </resources>

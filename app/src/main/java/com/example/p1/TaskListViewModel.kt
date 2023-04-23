@@ -20,7 +20,7 @@ class TaskListViewModel : ViewModel() {
 
     fun addTask(photoPath: String, name: String, description: String, rating: Int, deadline: String) {
         val currentList: ArrayList<Task> = taskList.value!!
-        //бред но пока так
+        //TODO бред но пока так
         val id = name+rating+deadline+(0..50).random().toString()
         currentList.add(Task(id,photoPath, name, description, rating, deadline))
         taskList.value = currentList

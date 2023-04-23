@@ -11,6 +11,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
+import androidx.core.net.toUri
 import androidx.fragment.app.activityViewModels
 import com.example.p1.databinding.FragmentNewTaskBinding
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -19,6 +21,8 @@ import kotlinx.datetime.*
 private const val GALLERY_REQUEST_CODE = 1
 
 class NewTaskFragment : Fragment() {
+
+    private var photoUri: Uri? = null
 
     private val viewModel: TaskListViewModel by activityViewModels()
     private var editMode : Boolean = false
@@ -53,6 +57,11 @@ class NewTaskFragment : Fragment() {
             binding.descriptionEditText.setText(task.description)
             binding.ratingBar.rating = task.rating.toFloat()
             binding.deadlineTV.text = task.deadline
+            if(getPhotoUri() != null) {
+                photoUri = getPhotoUri()
+                photoUri = task.photoPath.toUri()
+                binding.photo.setImageURI(photoUri)
+            }
             editMode = true
         }
 
@@ -72,7 +81,8 @@ class NewTaskFragment : Fragment() {
         }
 
         binding.deletePhoto.setOnClickListener {
-            binding.photo.setImageResource(R.drawable.outline_add_a_photo_24)
+            // TODO delete photoPath
+
         }
 
         binding.saveButton.setOnClickListener {
@@ -81,12 +91,15 @@ class NewTaskFragment : Fragment() {
                 val standartRating: Int
                 if(binding.ratingBar.rating.toInt() == 0) standartRating = 1
                 else standartRating = binding.ratingBar.rating.toInt()
+
+//                TODO photo is not added
+//                TODO change title edit
                 when(editMode){
                     true -> {
-                        viewModel.editTask(task!!, "", binding.nameEditText.text.toString(), binding.descriptionEditText.text.toString(), standartRating, binding.deadlineTV.text.toString())
+                        viewModel.editTask(task!!, photoUri.toString(), binding.nameEditText.text.toString(), binding.descriptionEditText.text.toString(), standartRating, binding.deadlineTV.text.toString())
                     }
                     false -> {
-                        viewModel.addTask("", binding.nameEditText.text.toString(), binding.descriptionEditText.text.toString(), standartRating, binding.deadlineTV.text.toString())
+                        viewModel.addTask(photoUri.toString(), binding.nameEditText.text.toString(), binding.descriptionEditText.text.toString(), standartRating, binding.deadlineTV.text.toString())
                     }
                 }
                 val transaction = requireActivity().supportFragmentManager.beginTransaction()
@@ -120,11 +133,11 @@ class NewTaskFragment : Fragment() {
             when(requestCode) {
                 GALLERY_REQUEST_CODE -> {
                     getPhotoVisibility()
-                    val photoUri = data?.data
-//                    TODO find how save photopath
+                    photoUri = data?.data
 //                    TODO photo rotation
                     if(photoUri != null) {
-                        binding.photo.setImageBitmap(getBitmapFromUri(photoUri))
+                        binding.photo.setImageBitmap(getBitmapFromUri(photoUri!!))
+                        setPhotoUri(photoUri)
                     }
                     else Toast.makeText(requireContext(), "Failed to get image", Toast.LENGTH_SHORT).show()
                 }
@@ -169,6 +182,13 @@ class NewTaskFragment : Fragment() {
         picker.addOnCancelListener {
             picker.dismiss()
         }
+    }
+    private fun getPhotoUri(): Uri? {
+        return photoUri
+    }
+
+    private fun setPhotoUri(path: Uri?) {
+        photoUri = path
     }
 
     private fun getFormattedDate(timestamp: Long) : String {

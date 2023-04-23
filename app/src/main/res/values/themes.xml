@@ -15,7 +15,7 @@
     </style>
 
     <style name="RatingBar" parent="Theme.AppCompat">
-        <item name="colorControlNormal">@color/tangerine</item>
-        <item name="colorControlActivated">@color/chestnut</item>
+        <item name="colorControlNormal">@color/tea_green</item>
+        <item name="colorControlActivated">@color/green</item>
     </style>
 </resources>
