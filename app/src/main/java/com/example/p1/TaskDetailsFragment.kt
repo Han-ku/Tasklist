@@ -38,9 +38,14 @@ class TaskDetailsFragment : Fragment() {
 
         binding.apply {
             if (task != null) {
+//                TODO WTF WHY DOES NOT WORK
                 checkPhoto(task.photoPath)
                 if(task.photoPath != "") {
                     photo.setImageURI(task.photoPath.toUri())
+                }
+                checkFile(task.filePath)
+                if(task.filePath != "") {
+                    file.text = task.filePath
                 }
                 name.text = task.name
                 description.text = task.description
@@ -62,5 +67,15 @@ class TaskDetailsFragment : Fragment() {
     fun checkPhoto(photoPath: String) {
         if(photoPath == "") binding.photo.visibility = View.GONE
         else binding.photo.visibility = View.VISIBLE
+    }
+
+    fun checkFile(filePath: String) {
+        if(filePath == "") {
+            binding.file.visibility = View.GONE
+            binding.fileTitle.visibility = View.GONE
+        } else {
+            binding.file.visibility = View.VISIBLE
+            binding.fileTitle.visibility = View.VISIBLE
+        }
     }
 }

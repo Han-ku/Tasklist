@@ -85,6 +85,61 @@
 
             </LinearLayout>
 
+            <TextView
+                android:id="@+id/fileTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="10dp"
+                android:text="Upload file of the task"
+                android:textAppearance="@style/text" />
+
+            <ImageView
+                android:id="@+id/getFile"
+                android:layout_width="68dp"
+                android:layout_height="68dp"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:src="@drawable/outline_upload_file_24"
+                app:tint="@color/tea_green" />
+
+            <TextView
+                android:id="@+id/file"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:textColor="@color/chestnut"
+                android:visibility="gone"
+                android:text="TextView" />
+
+            <LinearLayout
+                android:id="@+id/regetFileLayout"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="30dp"
+                android:orientation="horizontal"
+                android:visibility="gone">
+
+                <ImageView
+                    android:id="@+id/regetFile"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginHorizontal="10dp"
+                    app:tint="@color/tea_green"
+                    android:src="@drawable/baseline_autorenew_24" />
+
+                <ImageView
+                    android:id="@+id/deleteFile"
+                    android:layout_width="30dp"
+                    android:layout_height="30dp"
+                    android:layout_marginHorizontal="10dp"
+                    app:tint="@color/tea_green"
+                    android:src="@drawable/baseline_delete_outline_24" />
+
+            </LinearLayout>
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

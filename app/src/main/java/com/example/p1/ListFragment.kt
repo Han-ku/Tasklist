@@ -23,7 +23,6 @@ class ListFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View? {
         _binding =  FragmentListBinding.inflate(inflater, container, false)
-        //viewModel = ViewModelProvider(this)[TaskListViewModel::class.java]
         setHasOptionsMenu(true)
 
         if(viewModel.taskList.value == null){
@@ -43,7 +42,6 @@ class ListFragment : Fragment() {
 
                 builder.setTitle("Delete task").setMessage("Are you sure?")
                 builder.setPositiveButton("Yes") { dialog, which ->
-                    //adapter.deleteTask(it)
                     viewModel.deleteTask(it)
                     adapter.notifyDataSetChanged()
                 }
