@@ -51,7 +51,7 @@ class TaskDetailsFragment : Fragment() {
 
         binding.editButton.setOnClickListener {
             val transaction = requireActivity().supportFragmentManager.beginTransaction()
-            transaction.add(R.id.fragmentContainerView, NewTaskFragment.newInstance(task!!))
+            transaction.replace(R.id.fragmentContainerView, NewTaskFragment.newInstance(task!!))
             transaction.addToBackStack(null)
             transaction.commit()
         }

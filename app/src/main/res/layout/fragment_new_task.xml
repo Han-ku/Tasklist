@@ -80,7 +80,7 @@
                 android:id="@+id/nameError"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
-                android:text="Wprowadź imie "
+                android:text="Wprowadź imie"
                 android:visibility="gone"
                 android:layout_marginTop="4dp"
                 android:textAppearance="@style/error" />
@@ -192,6 +192,7 @@
                     android:id="@+id/ratingBar"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
+                    android:theme="@style/RatingBar"
                     android:stepSize="1"
                     android:numStars="5"/>
 

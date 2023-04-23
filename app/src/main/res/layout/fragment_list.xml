@@ -60,7 +60,8 @@
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 tools:itemCount="4"
-                tools:listitem="@layout/single_card" />
+                android:layout_marginBottom="75dp"
+                tools:listitem="@layout/simple_card" />
         </LinearLayout>
 
     </ScrollView>

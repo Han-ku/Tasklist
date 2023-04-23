@@ -21,6 +21,7 @@ private const val GALLERY_REQUEST_CODE = 1
 class NewTaskFragment : Fragment() {
 
     private val viewModel: TaskListViewModel by activityViewModels()
+    private var editMode : Boolean = false
 
     val currentInstant = Clock.System.now()
     val currentTimeMillis = currentInstant.toEpochMilliseconds()
@@ -47,6 +48,14 @@ class NewTaskFragment : Fragment() {
         _binding =  FragmentNewTaskBinding.inflate(inflater, container, false)
 
         val task = arguments?.getParcelable<Task>("task")
+        if(task != null){
+            binding.nameEditText.setText(task.name)
+            binding.descriptionEditText.setText(task.description)
+            binding.ratingBar.rating = task.rating.toFloat()
+            binding.deadlineTV.text = task.deadline
+            editMode = true
+        }
+
 
         binding.deadlineTV.text = getFormattedDate(currentTimeMillis)
 
@@ -72,8 +81,14 @@ class NewTaskFragment : Fragment() {
                 val standartRating: Int
                 if(binding.ratingBar.rating.toInt() == 0) standartRating = 1
                 else standartRating = binding.ratingBar.rating.toInt()
-
-                viewModel.addTask("", binding.nameEditText.text.toString(), binding.descriptionEditText.text.toString(), standartRating, binding.deadlineTV.text.toString())
+                when(editMode){
+                    true -> {
+                        viewModel.editTask(task!!, "", binding.nameEditText.text.toString(), binding.descriptionEditText.text.toString(), standartRating, binding.deadlineTV.text.toString())
+                    }
+                    false -> {
+                        viewModel.addTask("", binding.nameEditText.text.toString(), binding.descriptionEditText.text.toString(), standartRating, binding.deadlineTV.text.toString())
+                    }
+                }
                 val transaction = requireActivity().supportFragmentManager.beginTransaction()
                 transaction.replace(R.id.fragmentContainerView, ListFragment())
                 transaction.addToBackStack(null)

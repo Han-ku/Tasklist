@@ -6,14 +6,16 @@ import java.io.Serializable
 import kotlinx.datetime.*
 
 
-data class Task (val photoPath: String,
-                 val name: String,
-                 val description: String,
-                 val rating: Int,
-                 val deadline: String,
-                 val dateAdded: Instant = Clock.System.now())  : Serializable, Parcelable {
+data class Task (val id: String,
+                 var photoPath: String,
+                 var name: String,
+                 var description: String,
+                 var rating: Int,
+                 var deadline: String,
+                 var dateAdded: Instant = Clock.System.now())  : Serializable, Parcelable {
 
     constructor(parcel: Parcel) : this(
+        parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
@@ -22,6 +24,7 @@ data class Task (val photoPath: String,
         )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
+        parcel.writeString(id)
         parcel.writeString(photoPath)
         parcel.writeString(name)
         parcel.writeString(description)
