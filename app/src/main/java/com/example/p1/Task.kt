@@ -7,7 +7,6 @@ import kotlinx.datetime.*
 
 
 data class Task (val id: String,
-                 var photoPath: String,
                  var filePath: String,
                  var name: String,
                  var description: String,
@@ -20,14 +19,12 @@ data class Task (val id: String,
         parcel.readString()!!,
         parcel.readString()!!,
         parcel.readString()!!,
-        parcel.readString()!!,
         parcel.readInt(),
         parcel.readString()!!,
         )
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(id)
-        parcel.writeString(photoPath)
         parcel.writeString(filePath)
         parcel.writeString(name)
         parcel.writeString(description)

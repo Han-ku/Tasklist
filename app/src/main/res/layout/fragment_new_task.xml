@@ -32,60 +32,6 @@
                 android:textAppearance="@style/title" />
 
 
-
-            <ImageView
-                android:id="@+id/takePhoto"
-                android:layout_width="68dp"
-                android:layout_height="68dp"
-                android:layout_gravity="center"
-                android:src="@drawable/outline_add_a_photo_24"
-                app:tint="@color/tea_green" />
-
-            <TextView
-                android:id="@+id/photoTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
-                android:text="Upload photo of the task"
-                android:textAppearance="@style/text" />
-
-            <ImageView
-                android:id="@+id/photo"
-                android:layout_width="120dp"
-                android:layout_height="140dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
-                android:rotation="0"
-                android:visibility="gone" />
-
-            <LinearLayout
-                android:id="@+id/retakePhotoLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="30dp"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <ImageView
-                    android:id="@+id/retakePhoto"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginHorizontal="10dp"
-                    app:tint="@color/tea_green"
-                    android:src="@drawable/baseline_autorenew_24" />
-
-                <ImageView
-                    android:id="@+id/deletePhoto"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginHorizontal="10dp"
-                    app:tint="@color/tea_green"
-                    android:src="@drawable/baseline_delete_outline_24" />
-
-            </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"

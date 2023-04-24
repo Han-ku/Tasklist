@@ -20,12 +20,10 @@ import com.example.p1.databinding.FragmentNewTaskBinding
 import com.google.android.material.datepicker.MaterialDatePicker
 import kotlinx.datetime.*
 
-private const val GALLERY_REQUEST_CODE = 1
 private const val FILE_REQUEST_CODE = 2
 
 class NewTaskFragment : Fragment() {
 
-    private var photoUri: Uri? = null
     private var fileUri: Uri? = null
     private var fileName: String? = null
 
@@ -56,17 +54,15 @@ class NewTaskFragment : Fragment() {
     ): View? {
         _binding =  FragmentNewTaskBinding.inflate(inflater, container, false)
 
+
+
         val task = arguments?.getParcelable<Task>("task")
+
         if(task != null){
             binding.nameEditText.setText(task.name)
             binding.descriptionEditText.setText(task.description)
             binding.ratingBar.rating = task.rating.toFloat()
             binding.deadlineTV.text = task.deadline
-            if(getPhotoUri() != null) {
-                photoUri = getPhotoUri()
-                photoUri = task.photoPath.toUri()
-                binding.photo.setImageURI(photoUri)
-            }
             if(getFileUri() != null) {
                 fileUri = getFileUri()
                 fileName = getFileName()
@@ -83,33 +79,17 @@ class NewTaskFragment : Fragment() {
             showDatePickerDialog()
         }
 
-        binding.takePhoto.setOnClickListener {
-            openGallery()
-        }
-
-        binding.retakePhoto.setOnClickListener {
-            openGallery()
-        }
-
-        binding.deletePhoto.setOnClickListener {
-            // TODO delete photoPath
-            photoUri = null
-            binding.photo.visibility = View.GONE
-            binding.takePhoto.visibility = View.VISIBLE
-            binding.retakePhotoLayout.visibility = View.GONE
-        }
 
         binding.fileTV.setOnClickListener {
-            // TODO check correct
-            fileUri?.let {
-                val intent = Intent(Intent.ACTION_VIEW)
-                intent.setDataAndType(it, "application/pdf")
-                intent.flags = Intent.FLAG_ACTIVITY_CLEAR_TOP or Intent.FLAG_ACTIVITY_NEW_TASK
-                try {
-                    requireContext().startActivity(intent)
-                } catch (e: ActivityNotFoundException) {
-                    Toast.makeText(requireContext(), "No PDF viewer installed", Toast.LENGTH_SHORT).show()
-                }
+            // TODO open only 1 page from pdf
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.setDataAndType(fileUri, "application/pdf")
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+            try {
+                requireContext().startActivity(intent)
+            } catch (e: ActivityNotFoundException) {
+                Toast.makeText(requireContext(), "No PDF viewer app found", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -123,7 +103,6 @@ class NewTaskFragment : Fragment() {
         }
 
         binding.deleteFile.setOnClickListener {
-            // TODO delete filePath
             binding.fileTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray))
             fileUri = null
             binding.fileTV.text = resources.getString(R.string.add_file)
@@ -138,15 +117,15 @@ class NewTaskFragment : Fragment() {
                 if(binding.ratingBar.rating.toInt() == 0) standartRating = 1
                 else standartRating = binding.ratingBar.rating.toInt()
 
-//                TODO photo is not added
 //                TODO change title edit
                 when(editMode){
                     true -> {
-//                        TODO date updates to current
-                        viewModel.editTask(task!!, photoUri.toString(), binding.fileTV.text.toString(), binding.nameEditText.text.toString(), binding.descriptionEditText.text.toString(), standartRating, binding.deadlineTV.text.toString())
+//                        TODO open edit with incorrect date(current)
+//                        TODO file not add
+                        viewModel.editTask(task!!, fileUri.toString(), binding.nameEditText.text.toString(), binding.descriptionEditText.text.toString(), standartRating, binding.deadlineTV.text.toString())
                     }
                     false -> {
-                        viewModel.addTask(photoUri.toString(), binding.fileTV.text.toString(), binding.nameEditText.text.toString(), binding.descriptionEditText.text.toString(), standartRating, binding.deadlineTV.text.toString())
+                        viewModel.addTask(fileUri.toString(), binding.nameEditText.text.toString(), binding.descriptionEditText.text.toString(), standartRating, binding.deadlineTV.text.toString())
                     }
                 }
                 val transaction = requireActivity().supportFragmentManager.beginTransaction()
@@ -165,20 +144,8 @@ class NewTaskFragment : Fragment() {
         if(binding.nameEditText.text.toString() == "") binding.nameError.visibility = View.VISIBLE
         else binding.nameError.visibility = View.GONE
 
-        if(binding.nameEditText.text.toString() == "") binding.nameLayout.background = ContextCompat.getDrawable(requireContext(), R.drawable.editbox_error_background)
-        else binding.nameLayout.setBackgroundResource(android.R.drawable.editbox_background)
-
         if(binding.descriptionEditText.text.toString() == "") binding.descriptionError.visibility = View.VISIBLE
         else binding.descriptionError.visibility = View.GONE
-
-        if(binding.descriptionEditText.text.toString() == "") binding.descriptionLayout.background = ContextCompat.getDrawable(requireContext(), R.drawable.editbox_error_background)
-        else binding.descriptionLayout.setBackgroundResource(android.R.drawable.editbox_background)
-    }
-
-    private fun openGallery() {
-        val intent = Intent(Intent.ACTION_PICK)
-        intent.type = "image/*"
-        startActivityForResult(intent, GALLERY_REQUEST_CODE)
     }
 
     private fun openPackage() {
@@ -190,16 +157,6 @@ class NewTaskFragment : Fragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if ( resultCode == Activity.RESULT_OK) {
             when(requestCode) {
-                GALLERY_REQUEST_CODE -> {
-                    getPhotoVisibility()
-                    photoUri = data?.data
-//                    TODO photo rotation
-                    if(photoUri != null) {
-                        binding.photo.setImageBitmap(getBitmapFromUri(photoUri!!))
-                        setPhotoUri(photoUri)
-                    }
-                    else Toast.makeText(requireContext(), "Failed to get image", Toast.LENGTH_SHORT).show()
-                }
                 FILE_REQUEST_CODE -> {
                     fileUri = data?.data
                     getFileVisibility()
@@ -209,8 +166,8 @@ class NewTaskFragment : Fragment() {
                             if (cursor.moveToFirst()) {
                                 val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
                                 val pdfName = cursor.getString(nameIndex)
-                                binding.fileTV.text = pdfName
                                 setFileName(pdfName)
+                                binding.fileTV.text = fileName
                             }
                         }
                     }
@@ -221,22 +178,10 @@ class NewTaskFragment : Fragment() {
         }
     }
 
-    fun getPhotoVisibility() {
-        binding.photo.visibility = View.VISIBLE
-        binding.takePhoto.visibility = View.GONE
-        binding.retakePhotoLayout.visibility = View.VISIBLE
-    }
-
     fun getFileVisibility() {
             binding.fileTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.chestnut))
             binding.fileImageTV.visibility = View.GONE
             binding.updateFileLayout.visibility = View.VISIBLE
-    }
-
-    private fun getBitmapFromUri(uri: Uri): Bitmap? {
-        return requireContext().contentResolver.openInputStream(uri)?.use { inputStream ->
-            BitmapFactory.decodeStream(inputStream)
-        }
     }
 
     private fun showDatePickerDialog() {
@@ -262,13 +207,6 @@ class NewTaskFragment : Fragment() {
         picker.addOnCancelListener {
             picker.dismiss()
         }
-    }
-    private fun getPhotoUri(): Uri? {
-        return photoUri
-    }
-
-    private fun setPhotoUri(path: Uri?) {
-        photoUri = path
     }
 
     private fun getFileUri(): Uri? {

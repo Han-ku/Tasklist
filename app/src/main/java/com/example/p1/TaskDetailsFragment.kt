@@ -1,15 +1,21 @@
 package com.example.p1
 
+import android.content.ActivityNotFoundException
+import android.content.Intent
+import android.net.Uri
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.Toast
 import androidx.core.net.toUri
+import androidx.documentfile.provider.DocumentFile
 import com.example.p1.databinding.FragmentTaskDetailsBinding
 
 class TaskDetailsFragment : Fragment() {
 
+    var filePath: Uri? = null
     companion object {
         fun newInstance(task: Task): TaskDetailsFragment {
             val fragment = TaskDetailsFragment()
@@ -38,14 +44,10 @@ class TaskDetailsFragment : Fragment() {
 
         binding.apply {
             if (task != null) {
-//                TODO WTF WHY DOES NOT WORK
-                checkPhoto(task.photoPath)
-                if(task.photoPath != "") {
-                    photo.setImageURI(task.photoPath.toUri())
-                }
                 checkFile(task.filePath)
                 if(task.filePath != "") {
-                    file.text = task.filePath
+                    file.text = getFileNameFromUri(task.filePath.toUri())
+                    filePath = task.filePath.toUri()
                 }
                 name.text = task.name
                 description.text = task.description
@@ -61,21 +63,35 @@ class TaskDetailsFragment : Fragment() {
             transaction.commit()
         }
 
+        binding.file.setOnClickListener {
+            // TODO open only 1 page from pdf
+
+            val intent = Intent(Intent.ACTION_VIEW)
+            intent.setDataAndType(filePath, "application/pdf")
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
+
+            try {
+                requireContext().startActivity(intent)
+            } catch (e: ActivityNotFoundException) {
+                Toast.makeText(requireContext(), "No PDF viewer app found", Toast.LENGTH_SHORT).show()
+            }
+        }
+
         return binding.root
     }
 
-    fun checkPhoto(photoPath: String) {
-        if(photoPath == "") binding.photo.visibility = View.GONE
-        else binding.photo.visibility = View.VISIBLE
-    }
-
     fun checkFile(filePath: String) {
-        if(filePath == "") {
+        if(filePath == "" || filePath == resources.getString(R.string.add_file)) {
             binding.file.visibility = View.GONE
             binding.fileTitle.visibility = View.GONE
         } else {
             binding.file.visibility = View.VISIBLE
             binding.fileTitle.visibility = View.VISIBLE
         }
+    }
+
+    fun getFileNameFromUri(uri: Uri): String? {
+        val documentFile = DocumentFile.fromSingleUri(requireContext(), uri)
+        return documentFile?.name
     }
 }
