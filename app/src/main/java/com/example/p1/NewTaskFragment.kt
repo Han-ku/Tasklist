@@ -15,6 +15,7 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
+import androidx.documentfile.provider.DocumentFile
 import androidx.fragment.app.activityViewModels
 import com.example.p1.databinding.FragmentNewTaskBinding
 import com.google.android.material.datepicker.MaterialDatePicker
@@ -25,8 +26,6 @@ private const val FILE_REQUEST_CODE = 2
 class NewTaskFragment : Fragment() {
 
     private var fileUri: Uri? = null
-    private var fileName: String? = null
-
 
     private val viewModel: TaskListViewModel by activityViewModels()
     private var editMode : Boolean = false
@@ -59,21 +58,22 @@ class NewTaskFragment : Fragment() {
         val task = arguments?.getParcelable<Task>("task")
 
         if(task != null){
+            binding.title.text = "Edit task"
             binding.nameEditText.setText(task.name)
             binding.descriptionEditText.setText(task.description)
             binding.ratingBar.rating = task.rating.toFloat()
             binding.deadlineTV.text = task.deadline
-            if(getFileUri() != null) {
-                fileUri = getFileUri()
-                fileName = getFileName()
+            if(task.deadline != "" ) {
                 fileUri = task.filePath.toUri()
-                binding.fileTV.text = fileName
+//                TODO change text color
+                binding.fileTV.text = viewModel.getFileNameFromUri(requireContext(), fileUri!!)
             }
             editMode = true
         }
 
-
-        binding.deadlineTV.text = getFormattedDate(currentTimeMillis)
+        if(binding.deadlineTV.text == "") {
+            binding.deadlineTV.text = getFormattedDate(currentTimeMillis)
+        }
 
         binding.deadlineLayoutTV.setOnClickListener {
             showDatePickerDialog()
@@ -81,7 +81,6 @@ class NewTaskFragment : Fragment() {
 
 
         binding.fileTV.setOnClickListener {
-            // TODO open only 1 page from pdf
             val intent = Intent(Intent.ACTION_VIEW)
             intent.setDataAndType(fileUri, "application/pdf")
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
@@ -117,11 +116,8 @@ class NewTaskFragment : Fragment() {
                 if(binding.ratingBar.rating.toInt() == 0) standartRating = 1
                 else standartRating = binding.ratingBar.rating.toInt()
 
-//                TODO change title edit
                 when(editMode){
                     true -> {
-//                        TODO open edit with incorrect date(current)
-//                        TODO file not add
                         viewModel.editTask(task!!, fileUri.toString(), binding.nameEditText.text.toString(), binding.descriptionEditText.text.toString(), standartRating, binding.deadlineTV.text.toString())
                     }
                     false -> {
@@ -160,14 +156,12 @@ class NewTaskFragment : Fragment() {
                 FILE_REQUEST_CODE -> {
                     fileUri = data?.data
                     getFileVisibility()
-                    setFileUri(fileUri)
                     fileUri?.let {
                         requireContext().contentResolver.query(fileUri!!, null, null, null, null)?.use { cursor ->
                             if (cursor.moveToFirst()) {
                                 val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
                                 val pdfName = cursor.getString(nameIndex)
-                                setFileName(pdfName)
-                                binding.fileTV.text = fileName
+                                binding.fileTV.text = pdfName
                             }
                         }
                     }
@@ -209,21 +203,6 @@ class NewTaskFragment : Fragment() {
         }
     }
 
-    private fun getFileUri(): Uri? {
-        return fileUri
-    }
-
-    private fun setFileUri(path: Uri?) {
-        fileUri = path
-    }
-
-    private fun getFileName(): String? {
-        return fileName
-    }
-
-    private fun setFileName(name: String?) {
-        fileName = name
-    }
 
     private fun getFormattedDate(timestamp: Long) : String {
         val localDateTime = Instant.fromEpochMilliseconds(timestamp).toLocalDateTime(TimeZone.currentSystemDefault())
@@ -234,5 +213,7 @@ class NewTaskFragment : Fragment() {
 
         return formattedDate
     }
+
+
 }
 

@@ -1,5 +1,8 @@
 package com.example.p1
 
+import android.content.Context
+import android.net.Uri
+import androidx.documentfile.provider.DocumentFile
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import kotlinx.datetime.Clock
@@ -41,5 +44,10 @@ class TaskListViewModel : ViewModel() {
                 it.deadline = deadline
             }
         }
+    }
+
+    fun getFileNameFromUri(context: Context, uri: Uri): String? {
+        val documentFile = DocumentFile.fromSingleUri(context, uri)
+        return documentFile?.name
     }
 }
