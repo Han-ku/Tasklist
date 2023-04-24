@@ -13,6 +13,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.content.ContextCompat
 import androidx.core.net.toUri
 import androidx.fragment.app.activityViewModels
 import com.example.p1.databinding.FragmentNewTaskBinding
@@ -70,7 +71,7 @@ class NewTaskFragment : Fragment() {
                 fileUri = getFileUri()
                 fileName = getFileName()
                 fileUri = task.filePath.toUri()
-                binding.file.text = fileName
+                binding.fileTV.text = fileName
             }
             editMode = true
         }
@@ -98,7 +99,7 @@ class NewTaskFragment : Fragment() {
             binding.retakePhotoLayout.visibility = View.GONE
         }
 
-        binding.file.setOnClickListener {
+        binding.fileTV.setOnClickListener {
             // TODO check correct
             fileUri?.let {
                 val intent = Intent(Intent.ACTION_VIEW)
@@ -112,20 +113,22 @@ class NewTaskFragment : Fragment() {
             }
         }
 
-        binding.getFile.setOnClickListener {
+        binding.fileLayoutTV.setOnClickListener {
             openPackage()
         }
 
-        binding.regetFile.setOnClickListener {
+        binding.updateFile.setOnClickListener {
+            fileUri = null
             openPackage()
         }
 
         binding.deleteFile.setOnClickListener {
             // TODO delete filePath
-            binding.file.text = ""
-            binding.file.visibility = View.GONE
-            binding.getFile.visibility = View.VISIBLE
-            binding.regetFileLayout.visibility = View.GONE
+            binding.fileTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray))
+            fileUri = null
+            binding.fileTV.text = resources.getString(R.string.add_file)
+            binding.fileImageTV.visibility = View.VISIBLE
+            binding.updateFileLayout.visibility = View.GONE
         }
 
         binding.saveButton.setOnClickListener {
@@ -139,10 +142,11 @@ class NewTaskFragment : Fragment() {
 //                TODO change title edit
                 when(editMode){
                     true -> {
-                        viewModel.editTask(task!!, photoUri.toString(), binding.file.text.toString(), binding.nameEditText.text.toString(), binding.descriptionEditText.text.toString(), standartRating, binding.deadlineTV.text.toString())
+//                        TODO date updates to current
+                        viewModel.editTask(task!!, photoUri.toString(), binding.fileTV.text.toString(), binding.nameEditText.text.toString(), binding.descriptionEditText.text.toString(), standartRating, binding.deadlineTV.text.toString())
                     }
                     false -> {
-                        viewModel.addTask(photoUri.toString(), binding.file.text.toString(), binding.nameEditText.text.toString(), binding.descriptionEditText.text.toString(), standartRating, binding.deadlineTV.text.toString())
+                        viewModel.addTask(photoUri.toString(), binding.fileTV.text.toString(), binding.nameEditText.text.toString(), binding.descriptionEditText.text.toString(), standartRating, binding.deadlineTV.text.toString())
                     }
                 }
                 val transaction = requireActivity().supportFragmentManager.beginTransaction()
@@ -161,8 +165,14 @@ class NewTaskFragment : Fragment() {
         if(binding.nameEditText.text.toString() == "") binding.nameError.visibility = View.VISIBLE
         else binding.nameError.visibility = View.GONE
 
+        if(binding.nameEditText.text.toString() == "") binding.nameLayout.background = ContextCompat.getDrawable(requireContext(), R.drawable.editbox_error_background)
+        else binding.nameLayout.setBackgroundResource(android.R.drawable.editbox_background)
+
         if(binding.descriptionEditText.text.toString() == "") binding.descriptionError.visibility = View.VISIBLE
         else binding.descriptionError.visibility = View.GONE
+
+        if(binding.descriptionEditText.text.toString() == "") binding.descriptionLayout.background = ContextCompat.getDrawable(requireContext(), R.drawable.editbox_error_background)
+        else binding.descriptionLayout.setBackgroundResource(android.R.drawable.editbox_background)
     }
 
     private fun openGallery() {
@@ -192,14 +202,14 @@ class NewTaskFragment : Fragment() {
                 }
                 FILE_REQUEST_CODE -> {
                     fileUri = data?.data
-                    setFileUri(fileUri)
                     getFileVisibility()
+                    setFileUri(fileUri)
                     fileUri?.let {
                         requireContext().contentResolver.query(fileUri!!, null, null, null, null)?.use { cursor ->
                             if (cursor.moveToFirst()) {
                                 val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
                                 val pdfName = cursor.getString(nameIndex)
-                                binding.file.text = pdfName
+                                binding.fileTV.text = pdfName
                                 setFileName(pdfName)
                             }
                         }
@@ -218,9 +228,9 @@ class NewTaskFragment : Fragment() {
     }
 
     fun getFileVisibility() {
-        binding.file.visibility = View.VISIBLE
-        binding.getFile.visibility = View.GONE
-        binding.regetFileLayout.visibility = View.VISIBLE
+            binding.fileTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.chestnut))
+            binding.fileImageTV.visibility = View.GONE
+            binding.updateFileLayout.visibility = View.VISIBLE
     }
 
     private fun getBitmapFromUri(uri: Uri): Bitmap? {

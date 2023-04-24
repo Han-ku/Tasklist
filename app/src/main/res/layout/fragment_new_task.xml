@@ -31,23 +31,24 @@
                 android:text="Create new task"
                 android:textAppearance="@style/title" />
 
-            <TextView
-                android:id="@+id/photoTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="10dp"
-                android:text="Upload photo of the task"
-                android:textAppearance="@style/text" />
+
 
             <ImageView
                 android:id="@+id/takePhoto"
                 android:layout_width="68dp"
                 android:layout_height="68dp"
                 android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
                 android:src="@drawable/outline_add_a_photo_24"
                 app:tint="@color/tea_green" />
+
+            <TextView
+                android:id="@+id/photoTitle"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginBottom="20dp"
+                android:text="Upload photo of the task"
+                android:textAppearance="@style/text" />
 
             <ImageView
                 android:id="@+id/photo"
@@ -85,61 +86,6 @@
 
             </LinearLayout>
 
-            <TextView
-                android:id="@+id/fileTitle"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="10dp"
-                android:text="Upload file of the task"
-                android:textAppearance="@style/text" />
-
-            <ImageView
-                android:id="@+id/getFile"
-                android:layout_width="68dp"
-                android:layout_height="68dp"
-                android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
-                android:src="@drawable/outline_upload_file_24"
-                app:tint="@color/tea_green" />
-
-            <TextView
-                android:id="@+id/file"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="20dp"
-                android:textColor="@color/chestnut"
-                android:visibility="gone"
-                android:text="TextView" />
-
-            <LinearLayout
-                android:id="@+id/regetFileLayout"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="30dp"
-                android:orientation="horizontal"
-                android:visibility="gone">
-
-                <ImageView
-                    android:id="@+id/regetFile"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginHorizontal="10dp"
-                    app:tint="@color/tea_green"
-                    android:src="@drawable/baseline_autorenew_24" />
-
-                <ImageView
-                    android:id="@+id/deleteFile"
-                    android:layout_width="30dp"
-                    android:layout_height="30dp"
-                    android:layout_marginHorizontal="10dp"
-                    app:tint="@color/tea_green"
-                    android:src="@drawable/baseline_delete_outline_24" />
-
-            </LinearLayout>
-
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -161,14 +107,7 @@
                     android:layout_height="wrap_content"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/rattingTitle"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_gravity="center"
-                        android:layout_marginBottom="10dp"
-                        android:text="Choose the difficulty level"
-                        android:textAppearance="@style/text" />
+
 
                     <RatingBar
                         android:id="@+id/ratingBar"
@@ -179,6 +118,15 @@
                         android:stepSize="1"
                         android:rating="1"
                         android:theme="@style/RatingBar" />
+
+                    <TextView
+                        android:id="@+id/rattingTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:layout_marginBottom="10dp"
+                        android:text="Choose the difficulty level"
+                        android:textAppearance="@style/text" />
                 </LinearLayout>
             </LinearLayout>
 
@@ -287,6 +235,61 @@
                         app:tint="@color/tea_green" />
 
                 </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/fileLayoutTV"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginTop="21dp"
+                        android:background="@android:drawable/editbox_background"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/fileTV"
+                            android:layout_width="0dp"
+                            android:layout_height="wrap_content"
+                            android:layout_weight="1"
+                            android:gravity="center_vertical"
+                            android:padding="10dp"
+                            android:textColor="@color/gray"
+                            android:text="@string/add_file"
+                            android:textSize="18sp" />
+
+                        <ImageView
+                            android:id="@+id/fileImageTV"
+                            android:layout_width="30dp"
+                            android:layout_height="30dp"
+                            android:layout_gravity="center"
+                            android:src="@drawable/outline_upload_file_24"
+                            app:tint="@color/tea_green" />
+
+                        <LinearLayout
+                            android:id="@+id/updateFileLayout"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center"
+                            android:orientation="horizontal"
+                            android:visibility="gone">
+
+                            <ImageView
+                                android:id="@+id/updateFile"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                app:tint="@color/tea_green"
+                                android:src="@drawable/baseline_autorenew_24" />
+
+                            <ImageView
+                                android:id="@+id/deleteFile"
+                                android:layout_width="30dp"
+                                android:layout_height="30dp"
+                                android:layout_marginStart="10dp"
+                                app:tint="@color/tea_green"
+                                android:src="@drawable/baseline_delete_outline_24" />
+
+                        </LinearLayout>
+
+                    </LinearLayout>
             </LinearLayout>
 
             <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
