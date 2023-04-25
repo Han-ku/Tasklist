@@ -63,10 +63,12 @@ class NewTaskFragment : Fragment() {
             binding.descriptionEditText.setText(task.description)
             binding.ratingBar.rating = task.rating.toFloat()
             binding.deadlineTV.text = task.deadline
-            if(task.deadline != "" ) {
+            if(task.filePath != "" ) {
                 fileUri = task.filePath.toUri()
-//                TODO change text color
                 binding.fileTV.text = viewModel.getFileNameFromUri(requireContext(), fileUri!!)
+                binding.fileTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.chestnut))
+                binding.updateFileLayout.visibility = View.VISIBLE
+                binding.fileImageTV.visibility = View.GONE
             }
             editMode = true
         }
