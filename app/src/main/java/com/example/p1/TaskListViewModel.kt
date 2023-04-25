@@ -11,13 +11,13 @@ class TaskListViewModel : ViewModel() {
 
     var taskList = MutableLiveData<ArrayList<Task>>()
 
+    val description = "Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum"
     fun addTasks() {
         val tasks: List<Task> = listOf(
-            Task("1",  "", "Peter", "scfvgbhjnxdrcftvgybhunjimk", 1, "13-05-2023"),
-            Task("2",  "", "John", "asexdcfvgbhnjmkv bnjkm", 3, "01-07-2023"),
-            Task("3", "", "Mary", "xdcfvgbhnjkl;,kjbhvgcfcf  fgvbhjn", 2, "05-06-2024")
+            Task("1",  "", "Peter", description, 1, "13-05-2023"),
+            Task("2",  "", "John", description, 3, "01-07-2023"),
+            Task("3", "", "Mary", description, 2, "05-06-2024")
         )
-
         taskList.value = ArrayList(tasks)
     }
 
