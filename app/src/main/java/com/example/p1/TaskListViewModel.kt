@@ -30,8 +30,9 @@ class TaskListViewModel : ViewModel() {
         taskList.value = currentList
     }
 
-    fun deleteTask(task: Task){
+    fun deleteTask(task: Task) : ArrayList<Task>{
         taskList.value!!.remove(task)
+        return taskList.value!!
     }
 
     fun editTask(task: Task, filePath: String, name: String, description: String, rating: Int, deadline: String) {

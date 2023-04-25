@@ -42,8 +42,7 @@ class ListFragment : Fragment() {
 
                 builder.setTitle("Delete task").setMessage("Are you sure?")
                 builder.setPositiveButton("Yes") { dialog, which ->
-                    viewModel.deleteTask(it)
-                    adapter.notifyDataSetChanged()
+                    adapter.updateTaskList(viewModel.deleteTask(it))
                 }
                 builder.setNegativeButton("Cancel") { dialog, which ->
                     dialog.dismiss()
