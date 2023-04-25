@@ -9,5 +9,14 @@
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
     <string name="add_file">Dodaj plik z zadaniem</string>
     <string name="create_new_task">Create new Task</string>
+    <string name="search">Search</string>
+    <string name="current_amount_of_people">Obecna ilość osób:</string>
+    <string name="choose_the_difficulty_level">Choose the difficulty level</string>
+    <string name="input_name">Wprowadź imie</string>
+    <string name="input_description">Wprowadź opis</string>
+    <string name="complexity">Complexity</string>
+    <string name="deadline">Deadline</string>
+    <string name="description">Description</string>
+    <string name="file_with_task">File with task</string>
 
 </resources>
