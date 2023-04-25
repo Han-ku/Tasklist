@@ -64,6 +64,7 @@ class NewTaskFragment : Fragment() {
             binding.ratingBar.rating = task.rating.toFloat()
             binding.deadlineTV.text = task.deadline
             if(task.filePath != "" ) {
+//                TODO find problem with edit file
                 fileUri = task.filePath.toUri()
                 binding.fileTV.text = viewModel.getFileNameFromUri(requireContext(), fileUri!!)
                 binding.fileTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.chestnut))

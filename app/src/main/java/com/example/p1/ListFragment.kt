@@ -1,8 +1,9 @@
 package com.example.p1
 
-import android.app.AlertDialog
+import android.app.Dialog
 import android.os.Bundle
 import android.view.*
+import android.widget.TextView
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.activityViewModels
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +18,8 @@ class ListFragment : Fragment() {
     private lateinit var adapter: TaskListAdapter
     private val viewModel: TaskListViewModel by activityViewModels()
 
+    private lateinit var delete: TextView
+    private lateinit var cancel: TextView
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -38,17 +41,22 @@ class ListFragment : Fragment() {
                 transaction.addToBackStack(null)
                 transaction.commit() },
             longClickListener = {
-                val builder = AlertDialog.Builder(requireContext())
+                val dialog = Dialog(requireContext())
+                dialog.setContentView(R.layout.dialog_delete)
+                dialog.window?.setBackgroundDrawableResource(android.R.color.transparent)
 
-                builder.setTitle("Delete task").setMessage("Are you sure?")
-                builder.setPositiveButton("Yes") { dialog, which ->
+                delete = dialog.findViewById(R.id.delete)
+                cancel = dialog.findViewById(R.id.cancel)
+
+                delete.setOnClickListener { which ->
                     adapter.updateTaskList(viewModel.deleteTask(it))
-                }
-                builder.setNegativeButton("Cancel") { dialog, which ->
                     dialog.dismiss()
                 }
 
-                val dialog: AlertDialog = builder.create()
+                cancel.setOnClickListener {
+                    dialog.dismiss()
+                }
+
                 dialog.show()
         })
 
