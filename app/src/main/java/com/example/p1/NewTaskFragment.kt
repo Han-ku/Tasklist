@@ -53,23 +53,17 @@ class NewTaskFragment : Fragment() {
     ): View? {
         _binding =  FragmentNewTaskBinding.inflate(inflater, container, false)
 
-
-
         val task = arguments?.getParcelable<Task>("task")
 
         if(task != null){
-            binding.title.text = "Edit task"
+            binding.title.text = resources.getString(R.string.edit_task)
             binding.nameEditText.setText(task.name)
             binding.descriptionEditText.setText(task.description)
             binding.ratingBar.rating = task.rating.toFloat()
             binding.deadlineTV.text = task.deadline
-            if(task.filePath != "" ) {
-//                TODO find problem with edit file
-                fileUri = task.filePath.toUri()
-                binding.fileTV.text = viewModel.getFileNameFromUri(requireContext(), fileUri!!)
-                binding.fileTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.chestnut))
-                binding.updateFileLayout.visibility = View.VISIBLE
-                binding.fileImageTV.visibility = View.GONE
+            if(task.filePath != "" && task.filePath != resources.getString(R.string.add_file) && task.filePath != "null") {
+                binding.fileTV.text = viewModel.getFileNameFromUri(requireContext(), task.filePath.toUri())
+                getFileVisibility()
             }
             editMode = true
         }
@@ -87,7 +81,6 @@ class NewTaskFragment : Fragment() {
             val intent = Intent(Intent.ACTION_VIEW)
             intent.setDataAndType(fileUri, "application/pdf")
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
-
             try {
                 requireContext().startActivity(intent)
             } catch (e: ActivityNotFoundException) {
@@ -111,6 +104,7 @@ class NewTaskFragment : Fragment() {
             binding.fileImageTV.visibility = View.VISIBLE
             binding.updateFileLayout.visibility = View.GONE
         }
+
 
         binding.saveButton.setOnClickListener {
             if(binding.nameEditText.text.toString() != "" && binding.descriptionEditText.text.toString() != "") {
@@ -158,13 +152,13 @@ class NewTaskFragment : Fragment() {
             when(requestCode) {
                 FILE_REQUEST_CODE -> {
                     fileUri = data?.data
-                    getFileVisibility()
                     fileUri?.let {
                         requireContext().contentResolver.query(fileUri!!, null, null, null, null)?.use { cursor ->
                             if (cursor.moveToFirst()) {
                                 val nameIndex = cursor.getColumnIndex(OpenableColumns.DISPLAY_NAME)
                                 val pdfName = cursor.getString(nameIndex)
                                 binding.fileTV.text = pdfName
+                                getFileVisibility()
                             }
                         }
                     }
@@ -176,9 +170,15 @@ class NewTaskFragment : Fragment() {
     }
 
     fun getFileVisibility() {
+        if(binding.fileTV.text != resources.getString(R.string.add_file) && binding.fileTV.text != null && binding.fileTV.text != "") {
             binding.fileTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.chestnut))
             binding.fileImageTV.visibility = View.GONE
             binding.updateFileLayout.visibility = View.VISIBLE
+        } else {
+            binding.fileTV.setTextColor(ContextCompat.getColor(requireContext(), R.color.gray))
+            binding.fileImageTV.visibility = View.VISIBLE
+            binding.updateFileLayout.visibility = View.GONE
+        }
     }
 
     private fun showDatePickerDialog() {
@@ -216,7 +216,5 @@ class NewTaskFragment : Fragment() {
 
         return formattedDate
     }
-
-
 }
 

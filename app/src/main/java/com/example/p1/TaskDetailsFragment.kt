@@ -36,19 +36,15 @@ class TaskDetailsFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View? {
-        // Inflate the layout for this fragment
         _binding = FragmentTaskDetailsBinding.inflate(inflater, container, false)
 
         val task = arguments?.getParcelable<Task>("task")
 
-
         binding.apply {
             if (task != null) {
                 checkFile(task.filePath)
-                if(task.filePath != "") {
-                    file.text = getFileNameFromUri(task.filePath.toUri())
-                    filePath = task.filePath.toUri()
-                }
+                file.text = getFileNameFromUri(task.filePath.toUri())
+                filePath = task.filePath.toUri()
                 name.text = task.name
                 description.text = task.description
                 ratingBar.rating = task.rating.toFloat()
@@ -64,8 +60,6 @@ class TaskDetailsFragment : Fragment() {
         }
 
         binding.file.setOnClickListener {
-            // TODO open only 1 page from pdf
-
             val intent = Intent(Intent.ACTION_VIEW)
             intent.setDataAndType(filePath, "application/pdf")
             intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION)
@@ -81,7 +75,7 @@ class TaskDetailsFragment : Fragment() {
     }
 
     fun checkFile(filePath: String) {
-        if(filePath == "" || filePath == resources.getString(R.string.add_file)) {
+        if(filePath == "" || filePath == resources.getString(R.string.add_file) || filePath == "null") {
             binding.file.visibility = View.GONE
             binding.fileTitle.visibility = View.GONE
         } else {
