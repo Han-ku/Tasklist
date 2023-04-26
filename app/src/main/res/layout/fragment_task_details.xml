@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
@@ -7,139 +7,148 @@
     android:layout_marginHorizontal="16dp"
     tools:context=".TaskDetailsFragment">
 
-
-    <TextView
-        android:id="@+id/name"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="TextView"
-        android:textAppearance="@style/title"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        android:layout_marginVertical="40dp"/>
-
-    <LinearLayout
-        android:id="@+id/linearLayout2"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="40dp"
-        android:orientation="horizontal"
-        app:layout_constraintEnd_toEndOf="@+id/name"
-        app:layout_constraintStart_toStartOf="@+id/name"
-        app:layout_constraintTop_toBottomOf="@+id/name">
-
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
 
         <LinearLayout
             android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="vertical">
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:paddingBottom="130dp">
 
             <TextView
-                android:id="@+id/ratingBarTitle"
+                android:id="@+id/name"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
+                android:text="TextView"
+                android:textAppearance="@style/title"
+                android:textSize="22sp"
                 android:layout_gravity="center"
+                android:layout_marginTop="40dp"
+                android:layout_marginBottom="20dp"/>
+
+            <LinearLayout
+                android:id="@+id/linearLayout2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:layout_gravity="center">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/ratingBarTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textAppearance="@style/title_second"
+                        android:textColor="@color/chestnut"
+                        android:text="@string/complexity" />
+
+                    <RatingBar
+                        android:id="@+id/ratingBar"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:theme="@style/RatingBar"
+                        android:layout_marginTop="5dp"
+                        android:isIndicator="true" />
+
+                    <TextView
+                        android:id="@+id/deadlineTitle"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textAppearance="@style/title_second"
+                        android:textColor="@color/chestnut"
+                        android:layout_marginTop="10dp"
+                        android:text="@string/deadline" />
+
+                    <TextView
+                        android:id="@+id/deadline"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+                        android:textAppearance="@style/title_second"
+                        android:layout_marginTop="5dp"
+                        android:text="TextView" />
+
+
+                </LinearLayout>
+
+            </LinearLayout>
+
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/description_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/description"
                 android:textAppearance="@style/title_second"
                 android:textColor="@color/chestnut"
-                android:text="@string/complexity" />
-
-            <RatingBar
-                android:id="@+id/ratingBar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:theme="@style/RatingBar"
-                android:layout_marginTop="5dp"
-                android:isIndicator="true" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
+                android:layout_marginTop="35dp"/>
 
             <TextView
-                android:id="@+id/deadlineTitle"
+                android:id="@+id/description"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
+                android:textAppearance="@style/text"
+                android:textColor="@color/tangerine"
+                android:text="@string/lorem_ipsum"
+                app:layout_constraintStart_toStartOf="@+id/description_title"
+                app:layout_constraintTop_toBottomOf="@+id/description_title"
+                android:layout_marginTop="5dp"/>
+
+            <TextView
+                android:id="@+id/file_title"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/file_with_task"
                 android:textAppearance="@style/title_second"
                 android:textColor="@color/chestnut"
-                android:layout_marginTop="10dp"
-                android:text="@string/deadline" />
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toBottomOf="@+id/description"
+                android:layout_marginTop="35dp"/>
 
             <TextView
-                android:id="@+id/deadline"
+                android:id="@+id/file"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:textAppearance="@style/title_second"
-                android:layout_marginTop="5dp"
-                android:text="TextView" />
-
-
+                android:textAppearance="@style/text"
+                android:textColor="@color/tangerine"
+                android:text="HELP"
+                app:layout_constraintStart_toStartOf="@+id/file_title"
+                app:layout_constraintTop_toBottomOf="@+id/file_title"
+                android:layout_marginTop="5dp"/>
+            </LinearLayout>
         </LinearLayout>
-
-    </LinearLayout>
-
-
-    <TextView
-        android:id="@+id/description_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/description"
-        android:textAppearance="@style/title_second"
-        android:textColor="@color/chestnut"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/linearLayout2"
-        android:layout_marginTop="35dp"/>
-
-    <TextView
-        android:id="@+id/description"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/text"
-        android:textColor="@color/tangerine"
-        android:text="@string/lorem_ipsum"
-        app:layout_constraintStart_toStartOf="@+id/description_title"
-        app:layout_constraintTop_toBottomOf="@+id/description_title"
-        android:layout_marginTop="5dp"/>
-
-    <TextView
-        android:id="@+id/file_title"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/file_with_task"
-        android:textAppearance="@style/title_second"
-        android:textColor="@color/chestnut"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/description"
-        android:layout_marginTop="35dp"/>
-
-    <TextView
-        android:id="@+id/file"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:textAppearance="@style/text"
-        android:textColor="@color/tangerine"
-        android:text="HELP"
-        app:layout_constraintStart_toStartOf="@+id/file_title"
-        app:layout_constraintTop_toBottomOf="@+id/file_title"
-        android:layout_marginTop="5dp"/>
-
+    </ScrollView>
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/editButton"
         style="@style/Widget.Material3.FloatingActionButton.Primary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="40dp"
         android:contentDescription="fabTaskList"
         android:text="@string/edit"
         android:backgroundTint="@color/chestnut"
         android:textColor="@color/light_yellow"
         app:icon="@drawable/outline_edit_24"
         app:iconGravity="end"
-        android:gravity="center"
         app:iconTint="@color/light_yellow"
         android:textAppearance="@style/text_white"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
+        android:layout_gravity="bottom|center"
         app:shapeAppearance="@style/ShapeAppearanceOverlay.Material3.FloatingActionButton"
         tools:ignore="HardcodedText,ImageContrastCheck" />
 
-</androidx.constraintlayout.widget.ConstraintLayout>
+</FrameLayout>

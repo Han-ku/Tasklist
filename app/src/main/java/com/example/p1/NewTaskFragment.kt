@@ -108,7 +108,6 @@ class NewTaskFragment : Fragment() {
 
         binding.saveButton.setOnClickListener {
             if(binding.nameEditText.text.toString() != "" && binding.descriptionEditText.text.toString() != "") {
-
                 val standartRating: Int
                 if(binding.ratingBar.rating.toInt() == 0) standartRating = 1
                 else standartRating = binding.ratingBar.rating.toInt()

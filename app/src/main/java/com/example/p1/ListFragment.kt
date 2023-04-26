@@ -50,6 +50,7 @@ class ListFragment : Fragment() {
 
                 delete.setOnClickListener { which ->
                     adapter.updateTaskList(viewModel.deleteTask(it))
+                    binding.amountTextView.text = adapter.itemCount.toString()
                     dialog.dismiss()
                 }
 

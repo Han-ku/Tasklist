@@ -4,15 +4,26 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:fitsSystemWindows="false"
     tools:context=".NewTaskFragment">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintVertical_bias="0.0"
+        tools:layout_editor_absoluteX="0dp">
+
 
     <LinearLayout
         android:id="@+id/linearLayout3"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
+        app:layout_constraintVertical_bias="0.0"
         android:layout_marginHorizontal="26dp"
-        android:orientation="vertical"
-        tools:layout_editor_absoluteX="26dp">
+        android:paddingBottom="130dp"
+        android:orientation="vertical">
 
         <TextView
             android:id="@+id/title"
@@ -28,17 +39,9 @@
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="5dp"
             android:orientation="vertical">
 
-            <TextView
-                android:id="@+id/ratingError"
-                android:layout_width="match_parent"
-                android:layout_height="match_parent"
-                android:layout_marginTop="4dp"
-                android:text="Select rating"
-                android:textAppearance="@style/error"
-                android:visibility="gone" />
 
             <LinearLayout
                 android:id="@+id/rattingLayout"
@@ -72,13 +75,13 @@
             android:id="@+id/nameLayout"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="21dp"
             android:orientation="vertical">
 
             <EditText
                 android:id="@+id/nameEditText"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
+                android:layout_height="wrap_content"
+                android:minHeight="56dp"
                 android:background="@android:drawable/editbox_background"
                 android:hint="@string/input_name"
                 android:padding="10dp"
@@ -109,7 +112,8 @@
             <EditText
                 android:id="@+id/descriptionEditText"
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
+                android:layout_height="wrap_content"
+                android:minHeight="56dp"
                 android:background="@android:drawable/editbox_background"
                 android:hint="@string/input_description"
                 android:padding="10dp"
@@ -217,15 +221,16 @@
             </LinearLayout>
         </LinearLayout>
 
+    </ScrollView>
+
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
         android:id="@+id/saveButton"
         style="@style/Widget.Material3.FloatingActionButton.Primary"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:layout_marginVertical="50dp"
-        android:layout_marginBottom="60dp"
+        android:layout_marginBottom="30dp"
+        android:layout_marginEnd="20dp"
         android:backgroundTint="@color/chestnut"
         android:contentDescription="fabTaskList"
         android:text="@string/save"
@@ -235,8 +240,7 @@
         app:iconGravity="end"
         app:iconTint="@color/light_yellow"
         app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="@+id/linearLayout3"
-        app:layout_constraintStart_toStartOf="@+id/linearLayout3"
+        app:layout_constraintEnd_toEndOf="parent"
         app:shapeAppearance="@style/ShapeAppearanceOverlay.Material3.FloatingActionButton"
         tools:ignore="HardcodedText,ImageContrastCheck" />
 

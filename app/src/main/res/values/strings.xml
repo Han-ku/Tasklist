@@ -1,28 +1,28 @@
 <resources>
     <string name="app_name">P1</string>
-    <string name="sort_by">Sort list by</string>
-    <string name="rating">   Rating</string>
-    <string name="name">   Name</string>
-    <string name="latest">   Latest</string>
-    <string name="save">Save</string>
-    <string name="edit">Edit</string>
+    <string name="sort_by">Sortuj listę według</string>
+    <string name="rating">   Ranking</string>
+    <string name="name">   Nazwa</string>
+    <string name="latest">   Najnowsze</string>
+    <string name="save">Zapisz</string>
+    <string name="edit">Edytuj</string>
     <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</string>
     <string name="add_file">Dodaj plik z zadaniem</string>
-    <string name="edit_task">Edit task</string>
+    <string name="edit_task">Edytuj zadanie</string>
 
-    <string name="create_new_task">Create new Task</string>
-    <string name="search">Search</string>
+    <string name="create_new_task">Utwórz nowe zadanie</string>
+    <string name="sort">Sortój</string>
     <string name="current_amount_of_people">Obecna ilość osób:</string>
-    <string name="choose_the_difficulty_level">Choose the difficulty level</string>
+    <string name="choose_the_difficulty_level">Wybierz poziom trudności</string>
     <string name="input_name">Wprowadź imie</string>
     <string name="input_description">Wprowadź opis</string>
-    <string name="complexity">Complexity</string>
+    <string name="complexity">Złożoność</string>
     <string name="deadline">Deadline</string>
-    <string name="description">Description</string>
-    <string name="file_with_task">File with task</string>
-    <string name="delete_task">Delete task</string>
-    <string name="delete_question">Are you sure you want to delete this task?</string>
-    <string name="delete">Delete</string>
-    <string name="cancel">Cancel</string>
+    <string name="description">Opis</string>
+    <string name="file_with_task">Plik z zadaniem</string>
+    <string name="delete_task">Usuń zadanie</string>
+    <string name="delete_question">Czy na pewno chcesz usunąć to zadanie?</string>
+    <string name="delete">Usuń</string>
+    <string name="cancel">Anuluj</string>
 
 </resources>
